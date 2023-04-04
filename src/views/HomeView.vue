@@ -7,7 +7,7 @@
     </div>
     <div class="column main">
       <div class="column stats">
-        <Statistics></Statistics>
+        <!-- <Statistics></Statistics> -->
       </div>
       <div>
         <Roads v-if="is_roads"></Roads>
@@ -24,7 +24,7 @@
 import Menu from '@/components/Menu.vue'
 import Roads from '@/components/RoadsTable.vue'
 import Directions from '@/components/DirectionsTable.vue'
-import Statistics from '@/components/Statistics.vue'
+// import Statistics from '@/components/Statistics.vue'
 // import Map from '@/components/Map.vue'
 
 import {
@@ -37,7 +37,7 @@ import {
     Menu,
     Roads,
     Directions,
-    Statistics,
+    // Statistics,
     // Map,
   },
   data: () => ({

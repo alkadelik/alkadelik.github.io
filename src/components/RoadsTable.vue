@@ -28,7 +28,7 @@
             <td>{{ road.end_point.slice(0, 30) }}</td>
             <td>{{ road.distance }}</td>
             <td>{{ road.travel_time }}</td>
-            <td>{{ road.avg_speed }}</td>
+            <td :style="{color: '#' + road.status}" style="font-weight: bold">{{ road.avg_speed }}</td>
           </tr>
         </tbody>
       </table>

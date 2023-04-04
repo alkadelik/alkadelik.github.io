@@ -20,7 +20,6 @@
             <li>End address: {{ end_address}}</li>
             <li>Distance: {{  distance }}</li>
             <li>Duration: {{ duration }}</li>
-            <li>Speed: {{ speed }}</li>
           </ul>
         </div>
       </div>
@@ -28,7 +27,6 @@
         <h2>Upload from file</h2>
         <input type="file" id="file" accept=".xls, .xlsx" @change="getFile($event)">
         <button @click="extractFile">Upload file</button>
-        <h2>These are the excel roads</h2>
       </div>
     <div class="column table">
     </div>
@@ -125,5 +123,6 @@ export default {
   }
   ul {
     list-style-type: none;
+    text-align: left;
   }
 </style>
