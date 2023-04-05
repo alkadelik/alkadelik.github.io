@@ -1,8 +1,8 @@
 <template>
   <div class="menu">
     <ul>
-      <a @click="changeView('roads')">Roads</a>
-      <a @click="changeView('directions')">Directions</a>
+      <a @click="changeView('roads')">Segments</a>
+      <a @click="changeView('directions')">Upload</a>
     </ul>
   </div>
 </template>

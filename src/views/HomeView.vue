@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div class="column menu">
+    <!-- <div class="column menu">
       <Menu
       @viewRoadsOrDirections="isRoads"
       ></Menu>
-    </div>
+    </div> -->
     <div class="column main">
       <div class="column stats">
         <!-- <Statistics></Statistics> -->
@@ -14,18 +14,18 @@
         <Directions v-else></Directions>
       </div>
     </div>
-    <div class="column map">
-      <!-- <Map></Map> -->
+    <div class="column map" v-if="is_roads">
+      <Map></Map>
     </div>
   </div>
 </template>
 
 <script>
-import Menu from '@/components/Menu.vue'
+// import Menu from '@/components/Menu.vue'
 import Roads from '@/components/RoadsTable.vue'
 import Directions from '@/components/DirectionsTable.vue'
 // import Statistics from '@/components/Statistics.vue'
-// import Map from '@/components/Map.vue'
+import Map from '@/components/Map.vue'
 
 import {
   fetchRoads,
@@ -34,11 +34,11 @@ import {
  export default {
   name: 'DirectionsView',
   components: {
-    Menu,
+    // Menu,
     Roads,
     Directions,
     // Statistics,
-    // Map,
+    Map,
   },
   data: () => ({
     is_roads: true,
@@ -63,7 +63,7 @@ import {
   }
   .container {
     width: 100%;
-    max-width: 1200px;
+    /* max-width: 1200px; */
     margin: 0 auto;
     display: flex;
     flex-direction: row;

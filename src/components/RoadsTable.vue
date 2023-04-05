@@ -2,12 +2,13 @@
   <div class="tables">
     <div class="search">
         <div>
-          <input v-model="search" placeholder="Enter route no">
-          <button type="submit">Search</button>
+          <Directions></Directions>
+          <!-- <input v-model="search" placeholder="Enter route no">
+          <button type="submit">Search</button> -->
         </div>
       </div>
     <div class="column table">
-      <h2>List of roads</h2>
+      <h2>Segments</h2>
       <table>
         <thead>
           <tr>
@@ -21,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="road, i in filteredRoads" :key="i">
+          <tr class="details" v-for="road, i in filteredRoads" :key="i" @click="displayDetails(road.map)">
             <td>{{ road.route }}</td>
             <td>{{ road.segment }}</td>
             <td>{{ road.start_point }}</td>
@@ -38,20 +39,26 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import store from '@/store/index'
+import * as mutationTypes from '@/store/mutationTypes'
+import Directions from '@/components/DirectionsTable.vue'
+
 export default {
-  name: 'DirectionsTable',
+  name: 'RoadsTable',
+  components: {
+    Directions,
+  },
   props: {
     // msg: String
   },
   data: () => ({
     search: '',
-    roadCondition: {
-      // good: ,
-      // ok: ,
-      // bad: ,
-      // very_bad: ,
-    },
   }),
+  methods: {
+    displayDetails(map) {
+      store.commit(mutationTypes.CHANGE_MAP, map)
+    }
+  },
   computed: {
     ...mapGetters({
       roads: 'getRoads',
@@ -61,11 +68,6 @@ export default {
         if (this.search != '') {
           return road.route.toLowerCase().match(this.search.toLowerCase())
         }
-        // road.status == '1' ? red
-        //   : road.status == '2' ? pink
-        //   : road.status == '2' ? pink
-        //   : road.status == '2' ? pink
-
         return this.roads
       })
     }
@@ -95,5 +97,8 @@ export default {
   }
   .very_bad {
     color: red;
+  }
+  tr.details {
+    cursor: pointer;
   }
 </style>

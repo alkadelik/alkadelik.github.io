@@ -1,9 +1,9 @@
 <template>
   <div class="tables">
-    <h2>Directions</h2>
-    <div class="search">
-      Add road
-        <div>
+    <!-- <h2>Directions</h2> -->
+    <!-- <div class="search"> -->
+      <!-- Add road -->
+        <!-- <div>
           <label for="">Start:
             Longitude <input v-model="origin_lat" placeholder="Enter origin lat/lng">
             Latitude <input v-model="origin_lng" placeholder="Enter origin lat/lng">
@@ -13,18 +13,10 @@
             Latitude <input v-model="end_lng" placeholder="Enter destination lat/lng">
           </label>
           <button @click="getRoadStatus">Search</button>
-        </div>
-        <div>
-          <ul>
-            <li>Start address: {{ start_address }}</li>
-            <li>End address: {{ end_address}}</li>
-            <li>Distance: {{  distance }}</li>
-            <li>Duration: {{ duration }}</li>
-          </ul>
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
       <div>
-        <h2>Upload from file</h2>
+        <!-- <h2>Upload from file</h2> -->
         <input type="file" id="file" accept=".xls, .xlsx" @change="getFile($event)">
         <button @click="extractFile">Upload file</button>
       </div>
