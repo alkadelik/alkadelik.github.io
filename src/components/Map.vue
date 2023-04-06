@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <img :src="map" alt="" width="200px">
+    <img :src="'https://alkadelik.pythonanywhere.com/' + map" alt="" width="200px">
 
   </div>
 </template>
