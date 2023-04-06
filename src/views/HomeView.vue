@@ -14,7 +14,7 @@
         <Directions v-else></Directions>
       </div>
     </div>
-    <div id="map" class="column" v-if="is_roads">
+    <div id="map" class="column" v-show="display_map">
       <div id="mapmove">
         <Map></Map>
       </div>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 // import Menu from '@/components/Menu.vue'
 import Roads from '@/components/RoadsTable.vue'
 import Directions from '@/components/DirectionsTable.vue'
@@ -44,12 +46,16 @@ import {
   },
   data: () => ({
     is_roads: true,
-    street: '',
   }),
   methods: {
     isRoads(value) {
       this.is_roads = value
     }
+  },
+  computed: {
+    ...mapGetters({
+      display_map: 'getMapDisplayStatus',
+    })
   },
   created: function(){
     fetchRoads() // don't fetch road every time this view loads. Instead, only fetch at the first load or if a new road has been added. Use a data point in the store to indicate if a new road has been added or not
@@ -145,8 +151,5 @@ import {
   #mapmove {
     z-index: 101;
     cursor: move;
-    height: 30px;
-    width: 100%;
-    background-color: pink;
   }
 </style>

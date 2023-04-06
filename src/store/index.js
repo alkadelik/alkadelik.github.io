@@ -5,8 +5,7 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     roads: [],
-    // segment_map: null,
-    map_segment: '',
+    display_map: false,
     segment_map: {
       'map': null,
       'segment': '',
@@ -16,15 +15,20 @@ export default createStore({
   getters: {
     getRoads: (state) => state.roads,
     getMap: (state) => state.segment_map,
+    getMapDisplayStatus: (state) => state.display_map
   },
 
   mutations: {
+    [mutationTypes.CHANGE_MAP](state, data) {
+      state.segment_map = data
+      state.display_map = true
+    },
+    [mutationTypes.HIDE_MAP](state, data) {
+      state.display_map = data
+    },
     [mutationTypes.SAVE_ROADS](state, data) {
       state.roads = data
     },
-    [mutationTypes.CHANGE_MAP](state, data) {
-      state.segment_map = data
-    }
   },
 
   actions: {

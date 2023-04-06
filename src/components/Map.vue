@@ -1,22 +1,26 @@
 <template>
   <div class="">
-<<<<<<< HEAD
-    <img :src="'https://alkadelik.pythonanywhere.com' + map.map" alt="segment map">
+    <p><span @click="hideMap">x</span></p>
+    <img :src="'http://127.0.0.1:8000' + map.map" alt="segment map">
     <h4>{{ map.segment }}</h4>
-=======
-    <img :src="'https://alkadelik.pythonanywhere.com' + map" alt="" width="200px">
->>>>>>> f821de361ec4a8d942a546aafd8da7a69016d31b
 
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import store from '@/store/index'
+import * as mutationTypes from '@/store/mutationTypes'
 
 export default {
   name: 'MapComp',
   props: {
     // msg: String
+  },
+  methods: {
+    hideMap() {
+      store.commit(mutationTypes.HIDE_MAP, false)
+    }
   },
   computed: {
     ...mapGetters({
@@ -30,6 +34,18 @@ export default {
   img {
     width: 400px;
     /* margin-top: 100px; */
+  }
+  p {
+    text-align: right;
+    margin: 0;
+    font-size: 24px;
+  }
+  span {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  h4 {
+    margin-top: 0;
   }
 
 </style>
