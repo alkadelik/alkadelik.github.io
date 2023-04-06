@@ -1,4 +1,4 @@
-export const baseUrl = 'http://127.0.0.1:8000/'
+export const baseUrl = 'https://alkadelik.pythonanywhere.com/'
 
 // internal
 export const fetchRoads = `${baseUrl}roads/api/list/`
