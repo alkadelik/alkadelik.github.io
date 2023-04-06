@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="details" v-for="road, i in filteredRoads" :key="i" @click="displayDetails(road.map)">
+          <tr class="details" v-for="road, i in filteredRoads" :key="i" @click="displayDetails(road.map, road.segment)">
             <td>{{ road.route }}</td>
             <td>{{ road.segment }}</td>
             <td>{{ road.start_point }}</td>
@@ -55,8 +55,9 @@ export default {
     search: '',
   }),
   methods: {
-    displayDetails(map) {
-      store.commit(mutationTypes.CHANGE_MAP, map)
+    displayDetails(map, segment) {
+      let data = {'map': map, 'segment': segment}
+      store.commit(mutationTypes.CHANGE_MAP, data)
     }
   },
   computed: {
