@@ -4,16 +4,16 @@ import HomeView from '../views/HomeView.vue'
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'segments',
     component: HomeView
   },
   {
-    path: '/roads',
-    name: 'roads',
+    path: '/string_segments',
+    name: 'strings',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/RoadView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/StringsView.vue')
   },
   {
     // path: '/directions',

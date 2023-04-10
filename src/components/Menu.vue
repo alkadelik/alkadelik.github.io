@@ -1,8 +1,8 @@
 <template>
   <div class="menu">
     <ul>
-      <a @click="changeView('roads')">Segments</a>
-      <a @click="changeView('directions')">Upload</a>
+        <router-link to="/">Segments</router-link>
+        <router-link to="/string_segments">Strings</router-link>
     </ul>
   </div>
 </template>

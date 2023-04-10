@@ -2,6 +2,17 @@
   <router-view/>
 </template>
 
+<script>
+import {
+  fetchRoads,
+} from '@/services/apiServices'
+export default {
+  created: function(){
+    fetchRoads() // put this in App.vue level
+  },
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -22,5 +33,8 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+ul {
+  list-style-type: none;
 }
 </style>

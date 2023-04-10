@@ -1,22 +1,6 @@
 <template>
   <div class="tables">
-    <!-- <h2>Directions</h2> -->
-    <!-- <div class="search"> -->
-      <!-- Add road -->
-        <!-- <div>
-          <label for="">Start:
-            Longitude <input v-model="origin_lat" placeholder="Enter origin lat/lng">
-            Latitude <input v-model="origin_lng" placeholder="Enter origin lat/lng">
-          </label>
-          <label for="">End:
-            Longitude <input v-model="end_lat" placeholder="Enter destination lat/lng">
-            Latitude <input v-model="end_lng" placeholder="Enter destination lat/lng">
-          </label>
-          <button @click="getRoadStatus">Search</button>
-        </div> -->
-      <!-- </div> -->
       <div>
-        <!-- <h2>Upload from file</h2> -->
         <input type="file" id="file" accept=".xls, .xlsx" @change="getFile($event)">
         <button @click="extractFile">Upload file</button>
       </div>
@@ -27,17 +11,14 @@
 
 <script>
 import {
-  // fetchTravelInfo,
-  // getRoadStatus,
   fetchRoadStatus,
   bulkUpload,
 } from '@/services/apiServices'
 import * as XLSX from 'xlsx'
 
 export default {
-  name: 'DirectionsTable',
+  name: 'UploadFile',
   props: {
-    // msg: String
   },
   data: () => ({
     origin_lat: '6.442241641259771',

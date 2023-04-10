@@ -7,13 +7,24 @@ import store from '@/store/index'
 // catch {null}
 // const auth = 'AIzaSyD-mKszUKKRlSBlc8u9Tb8zj7UslWpDxB4'
 
+export const getStringDetails = (data) => {
+    return axios ({
+        method: 'post',
+        url: `${urls.getStringDetails}`,
+        data
+    })
+    // .then((response) => {
+    //     store.commit(mutationTypes.SAVE_SEGMENTS, response.data)
+    // })
+}
 export const fetchRoads = () => {
     return axios ({
         method: 'get',
         url: `${urls.fetchRoads}`,
     })
     .then((response) => {
-        store.commit(mutationTypes.SAVE_ROADS, response.data)
+        store.commit(mutationTypes.SAVE_SEGMENTS, response.data.segments)
+        store.commit(mutationTypes.SAVE_ADDRESSES, response.data.addresses)
     })
 }
 export const fetchRoadStatus = (data) => {
@@ -21,6 +32,15 @@ export const fetchRoadStatus = (data) => {
         method: 'post',
         url: `${urls.fetchRoadStatus}`,
         data
+    })
+}
+export const fetchRoutes = () => {
+    return axios ({
+        method: 'get',
+        url: `${urls.fetchRoutes}`,
+    })
+    .then((response) => {
+        store.commit(mutationTypes.SAVE_ROUTES, response.data)
     })
 }
 export const bulkUpload = (data) => {

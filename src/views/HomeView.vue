@@ -1,17 +1,15 @@
 <template>
   <div class="container">
-    <!-- <div class="column menu">
-      <Menu
-      @viewRoadsOrDirections="isRoads"
-      ></Menu>
-    </div> -->
+    <div class="column menu">
+      <Menu></Menu>
+    </div>
     <div class="column main">
       <div class="column stats">
         <!-- <Statistics></Statistics> -->
       </div>
       <div>
-        <Roads v-if="is_roads"></Roads>
-        <Directions v-else></Directions>
+        <UploadFile></UploadFile>
+        <Segments></Segments>
       </div>
     </div>
     <div id="map" class="column" v-show="display_map">
@@ -25,40 +23,29 @@
 <script>
 import { mapGetters } from 'vuex'
 
-// import Menu from '@/components/Menu.vue'
-import Roads from '@/components/RoadsTable.vue'
-import Directions from '@/components/DirectionsTable.vue'
+import Menu from '@/components/Menu.vue'
+import UploadFile from '@/components/AddSegments.vue'
+import Segments from '@/components/SegmentsTable.vue'
 // import Statistics from '@/components/Statistics.vue'
 import Map from '@/components/Map.vue'
-
-import {
-  fetchRoads,
-} from '@/services/apiServices'
 
  export default {
   name: 'DirectionsView',
   components: {
-    // Menu,
-    Roads,
-    Directions,
+    Menu,
+    UploadFile,
+    Segments,
     // Statistics,
     Map,
   },
   data: () => ({
-    is_roads: true,
   }),
   methods: {
-    isRoads(value) {
-      this.is_roads = value
-    }
   },
   computed: {
     ...mapGetters({
       display_map: 'getMapDisplayStatus',
     })
-  },
-  created: function(){
-    fetchRoads() // don't fetch road every time this view loads. Instead, only fetch at the first load or if a new road has been added. Use a data point in the store to indicate if a new road has been added or not
   },
   mounted() {
     // Make the DIV element draggable:
@@ -123,6 +110,7 @@ import {
     justify-content: center;
   }
   .menu {
+    display: none;
     width: 100%;
     max-width: 150px;
     padding: 10px;

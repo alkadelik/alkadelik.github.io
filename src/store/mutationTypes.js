@@ -1,3 +1,5 @@
-export const SAVE_ROADS = 'SAVE_ROADS'
 export const CHANGE_MAP = 'CHANGE_MAP'
 export const HIDE_MAP = 'HIDE_MAP'
+export const SAVE_ADDRESSES = 'SAVE_ADDRESSES'
+export const SAVE_ROUTES = 'SAVE_ROUTES'
+export const SAVE_SEGMENTS = 'SAVE_SEGMENTS'

@@ -1,14 +1,9 @@
 <template>
   <div class="">
-<<<<<<< HEAD
     <p><span @click="hideMap">x</span></p>
     <img :src="'http://127.0.0.1:8000' + map.map" alt="segment map">
     <h4>{{ map.segment }}</h4>
 
-=======
-    <img :src="'https://alkadelik.pythonanywhere.com' + map.map" alt="segment map">
-    <h4>{{ map.segment }}</h4>
->>>>>>> 90606cd9e3b8a7ad53ff8e15ccf33d408c398363
   </div>
 </template>
 
