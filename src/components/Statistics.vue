@@ -2,8 +2,32 @@
   <div class="summary">
     <h2>Summary</h2>
     <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Route</th>
+            <th>Segments</th>
+            <th>Total length</th>
+            <th>Good</th>
+            <th>Bad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>E1</td>
+            <td>6 (% of A roads)</td>
+            <td>150Km (6%)</td>
+            <td>90Km (70%)</td>
+            <td>60% (30%)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      
       <tr>
-        <td>Total lenght of roads</td>
+        <td>Total no of routes, segments, lenght, good, bad</td>
+        <td>Last update (of table)</td>
+        <td>Last repair</td>
         <td>{{ totalRoadsLength }}Km</td>
       </tr>
       <tr>
@@ -35,10 +59,11 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      roads: 'getRoads',
+      segments: 'getSegments',
+      routes: 'getRoutes',
     }),
     totalRoadsLength() {
-      return this.roads.reduce((total, road) => {
+      return this.segments.reduce((total, road) => {
         return Number(total) + Number(road.distance)
       }, 0.0)
     }

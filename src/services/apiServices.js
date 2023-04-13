@@ -25,6 +25,7 @@ export const fetchRoads = () => {
     .then((response) => {
         store.commit(mutationTypes.SAVE_SEGMENTS, response.data.segments)
         store.commit(mutationTypes.SAVE_ADDRESSES, response.data.addresses)
+        store.commit(mutationTypes.SAVE_ROUTES, response.data.routes)
     })
 }
 export const fetchRoadStatus = (data) => {

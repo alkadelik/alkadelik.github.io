@@ -9,6 +9,15 @@
       </div>
     <div class="column table">
       <h2>Segments</h2>
+      <ul class="routes">
+        <li @click="clearSearch">All</li>
+        <li
+          v-for="route, i in routes" :key="i"
+          @click="filterRoute(route.route)"
+          >
+          {{ route.route }}
+        </li>
+      </ul>
       <table>
         <thead>
           <tr>
@@ -59,21 +68,29 @@ export default {
     search: '',
   }),
   methods: {
+    clearSearch() {
+      this.search = ''
+    },
     displayDetails(map, segment) {
       let data = {'map': map, 'segment': segment}
       store.commit(mutationTypes.CHANGE_MAP, data)
+    },
+    filterRoute(route) {
+      console.log(route)
+      this.search = route
     }
   },
   computed: {
     ...mapGetters({
-      segment: 'getSegments',
+      segments: 'getSegments',
+      routes: 'getRoutes'
     }),
     filteredSegments() {
-      return this.segment.filter((segment) => {
+      return this.segments.filter((segment) => {
         if (this.search != '') {
           return segment.route.toLowerCase().match(this.search.toLowerCase())
         }
-        return this.segment
+        return this.segments
       })
     }
   }
@@ -108,5 +125,14 @@ export default {
   }
   .capitalise {
     text-transform: capitalize;
+  }
+  .routes ul {
+    /* display: block; */
+  }
+  .routes li {
+    display: inline-block;
+    padding: 3px; 
+    margin-right: 7px;
+    cursor: pointer;
   }
 </style>

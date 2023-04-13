@@ -8,7 +8,7 @@
         <!-- <Statistics></Statistics> -->
       </div>
       <div>
-        <UploadFile></UploadFile>
+        <!-- <UploadFile></UploadFile> -->
         <Segments></Segments>
       </div>
     </div>
@@ -24,7 +24,7 @@
 import { mapGetters } from 'vuex'
 
 import Menu from '@/components/Menu.vue'
-import UploadFile from '@/components/AddSegments.vue'
+// import UploadFile from '@/components/AddSegments.vue'
 import Segments from '@/components/SegmentsTable.vue'
 // import Statistics from '@/components/Statistics.vue'
 import Map from '@/components/Map.vue'
@@ -33,7 +33,7 @@ import Map from '@/components/Map.vue'
   name: 'DirectionsView',
   components: {
     Menu,
-    UploadFile,
+    // UploadFile,
     Segments,
     // Statistics,
     Map,

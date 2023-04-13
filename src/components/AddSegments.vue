@@ -1,6 +1,11 @@
 <template>
   <div class="tables">
       <div>
+        <input v-model="origin_lat">
+        <input v-model="origin_lng">
+        <input v-model="end_lat">
+        <input v-model="end_lng">
+        <button @click="getRoadStatus">Get single status</button>
         <input type="file" id="file" accept=".xls, .xlsx" @change="getFile($event)">
         <button @click="extractFile">Upload file</button>
       </div>
