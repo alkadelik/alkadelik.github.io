@@ -7,17 +7,27 @@
           <button type="submit">Search</button> -->
         </div>
       </div>
-    <div class="column table">
+    <div class="table">
       <h2>Segments</h2>
-      <ul class="routes">
-        <li @click="clearSearch">All</li>
-        <li
-          v-for="route, i in routes" :key="i"
-          @click="filterRoute(route.route)"
-          >
-          {{ route.route }}
-        </li>
-      </ul>
+      <div class="pagination">
+        <ul><li style="display: block;" @click="clearSearch">All</li></ul>
+        <ul class="routes">
+          <li
+            v-for="route, i in aRoutes" :key="i"
+            @click="filterRoute(route.route)"
+            >
+            {{ route.route }}
+          </li>
+        </ul>
+        <ul class="routes">
+          <li
+            v-for="route, i in fRoutes" :key="i"
+            @click="filterRoute(route.route)"
+            >
+            {{ route.route }}
+          </li>
+        </ul>
+      </div>
       <table>
         <thead>
           <tr>
@@ -66,6 +76,7 @@ export default {
   },
   data: () => ({
     search: '',
+    cat1: 1,
   }),
   methods: {
     clearSearch() {
@@ -92,7 +103,17 @@ export default {
         }
         return this.segments
       })
-    }
+    },
+    aRoutes() {
+      return this.routes.filter((route) => {
+        return route.category.toString().match('1')
+      })
+    },
+    fRoutes() {
+      return this.routes.filter((route) => {
+        return route.category.toString().match('2')
+      })
+    },
   }
 }
 </script>
@@ -126,11 +147,13 @@ export default {
   .capitalise {
     text-transform: capitalize;
   }
-  .routes ul {
-    /* display: block; */
+  .pagination ul {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
   }
   .routes li {
-    display: inline-block;
+    /* display: inline-block; */
     padding: 3px; 
     margin-right: 7px;
     cursor: pointer;
