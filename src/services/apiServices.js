@@ -7,6 +7,14 @@ import store from '@/store/index'
 // catch {null}
 // const auth = 'AIzaSyD-mKszUKKRlSBlc8u9Tb8zj7UslWpDxB4'
 
+
+export const bulkUpload = (data) => {
+    return axios ({
+        method: 'post',
+        url: `${urls.bulkUpload}`,
+        data
+    })
+}
 export const getStringDetails = (data) => {
     return axios ({
         method: 'post',
@@ -44,10 +52,13 @@ export const fetchRoutes = () => {
         store.commit(mutationTypes.SAVE_ROUTES, response.data)
     })
 }
-export const bulkUpload = (data) => {
+export const updateAddresses = (data) => {
     return axios ({
         method: 'post',
-        url: `${urls.bulkUpload}`,
+        url: `${urls.updateAddresses}`,
         data
+    })
+    .then((response) => {
+        console.log(response.data)
     })
 }

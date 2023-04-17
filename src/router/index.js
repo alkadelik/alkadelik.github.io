@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LandingView from '../views/LandingView.vue'
+import UpdateView from '../views/UpdateView.vue'
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue')
+  },
+  {
+    path: '/update',
+    name: 'update',
+    component: UpdateView
   }
 ]
 

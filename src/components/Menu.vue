@@ -3,6 +3,7 @@
     <ul>
         <router-link to="/segments">Segments</router-link>
         <router-link :to="{name: 'analysis'}">Analysis</router-link>
+        <router-link :to="{name: 'update'}">Updates</router-link>
     </ul>
   </div>
 </template>

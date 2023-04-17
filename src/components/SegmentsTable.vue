@@ -35,8 +35,12 @@
             <th>Code</th>
             <th>Name</th>
             <th>State</th>
-            <th>Start point</th>
-            <th>End point</th>
+            <th>Start name</th>
+            <th>Northings</th>
+            <th>Eastings</th>
+            <th>End name</th>
+            <th>Northings2</th>
+            <th>Eastings2</th>
             <th>Distance</th>
             <th>Travel time</th>
             <th>Average speed</th>
@@ -49,6 +53,10 @@
             <td class="capitalise">{{ segment.name.toLowerCase() }}</td>
             <td class="capitalise">{{ segment.state.toLowerCase() }}</td>
             <td class="capitalise">{{ segment.start_point.toLowerCase() }}</td>
+            <td class="capitalise">{{ segment.start_point.toLowerCase() }}</td>
+            <td class="capitalise">{{ segment.start_point.toLowerCase() }}</td>
+            <td class="capitalise">{{ segment.end_point.toLowerCase() }}</td>
+            <td class="capitalise">{{ segment.end_point.toLowerCase() }}</td>
             <td class="capitalise">{{ segment.end_point.toLowerCase() }}</td>
             <td>{{ segment.distance }} Km</td>
             <td>{{ segment.travel_time }} mins</td>

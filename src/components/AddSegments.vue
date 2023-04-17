@@ -7,17 +7,24 @@
         <input v-model="end_lng">
         <button @click="getRoadStatus">Get single status</button>
         <input type="file" id="file" accept=".xls, .xlsx" @change="getFile($event)">
-        <button @click="extractFile">Upload file</button>
+        <button @click="extractFile">Upload Segments</button>
       </div>
     <div class="column table">
     </div>
+  </div>
+  <div>
+    <button @click="updateAddress">Update Address</button>
+    <button @click="updateSegmentCode">Update Segment Code</button>
+    <button @click="updateCoordinates">Update Coordinates</button>
+    <button @click="updateStatus">Update Status</button>
   </div>
 </template>
 
 <script>
 import {
   fetchRoadStatus,
-  bulkUpload,
+  // bulkUpload,
+  updateAddresses,
 } from '@/services/apiServices'
 import * as XLSX from 'xlsx'
 
@@ -53,7 +60,10 @@ export default {
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
         console.log(data)
         // nodes_sheet = JSON.stringify(data, undefined, 4) // converts to string. Not necessary
-        bulkUpload(data)
+
+
+        // bulkUpload(data) // enable for bulk upload. Also separate the extract part from the api part
+        updateAddresses(data)
       }      
     },
     getRoadStatus() {
@@ -78,6 +88,9 @@ export default {
         .catch(error => {
             console.error(error)
         })
+    },
+    updateAddress() {
+      updateAddresses()
     }
   },
   computed: {
