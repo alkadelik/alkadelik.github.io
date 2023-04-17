@@ -153,6 +153,8 @@ table {
     display: flex;
     justify-content: center;
     align-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1100px;
   }
   .routes li {
     /* display: inline-block; */
