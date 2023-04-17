@@ -17,10 +17,10 @@ export const getStringDetails = (data) => {
     //     store.commit(mutationTypes.SAVE_SEGMENTS, response.data)
     // })
 }
-export const fetchRoads = () => {
+export const fetchSegments = () => {
     return axios ({
         method: 'get',
-        url: `${urls.fetchRoads}`,
+        url: `${urls.fetchSegments}`,
     })
     .then((response) => {
         store.commit(mutationTypes.SAVE_SEGMENTS, response.data.segments)

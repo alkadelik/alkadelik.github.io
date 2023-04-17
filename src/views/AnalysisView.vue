@@ -3,51 +3,42 @@
     <div class="column menu">
       <Menu></Menu>
     </div>
-    <div class="column main">
-      <div class="column">
-        <Strings></Strings>
+    <div class="main">
+      <div class="top">
+        <Statistics></Statistics>
       </div>
-      <div>
-        <select v-model="route" @change="listSegments">
-          <option disabled>Please select a route</option>
-          <option v-for="route, i in routes" :key="i" :value="route.id">{{ route.route }}</option>
-        </select>
-        <ul>
-          <li v-for="segment, i in route_segments" :key="i" @click="checkString(segment.start_point, segment.end_point, i)">
-            {{ segment.code }}
-          </li>
-        </ul>
-        <button @click="clearSegments">Clear</button>
-        display route below (fetch route or use saved route image)
+      <div class="bottom map">
+        <div style="height: 400px; width: 100%; background-color: paleturquoise;">
+          <Map></Map>
+        </div>
       </div>
     </div>
-    <!-- <div id="map" class="column" v-show="display_map">
-      <div id="mapmove">
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 
+import Map from '@/components/Map.vue'
 import Menu from '@/components/Menu.vue'
-import Strings from '@/components/Strings.vue'
+import Statistics from '@/components/Statistics.vue'
 
 import {
-  fetchRoutes,
+  // fetchRoutes,
   getStringDetails,
 } from '@/services/apiServices'
 
  export default {
   name: 'StringsView',
   components: {
+    Map,
     Menu,
-    Strings,
+    Statistics,
   },
   data: () => ({
     route: {},
     route_segments: [],
+    // search: '',
     seg1_start: '',
     seg1_end: '',
     seg2_start: '',
@@ -98,31 +89,21 @@ import {
       this.seg2_end = ''
       this.seg1_position = null
     },
+    emitSearch() {
+      // search segment code, name, address, start point, end point
+      // if exactly one result, send it
+      // not search for route number
+    },
     listSegments() {
       this.route_segments = this.segments.filter((segment) => 
       segment.route[0] == this.route
       )
     }
   },
-  computed: {
-    ...mapGetters({
-      addresses: 'getAddresses',
-      segments: 'getSegments',
-      routes: 'getRoutes',
-    })
-  },
-  created: function(){
-    fetchRoutes() // optimise to only fetch at the first load or if a new route has been added
-  },
 }
 </script>
 
 <style scoped>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
   .container {
     width: 100%;
     /* max-width: 1200px; */
@@ -143,11 +124,8 @@ import {
     padding: 10px;
     box-sizing: border-box;
   }
-  li {
-    display: inline-block;
-    border: 1px solid grey;
-    padding: 10px;
-    cursor: pointer;
-    margin-right: 5px;
+  .main {
+    width: 100%;
   }
+ 
 </style>

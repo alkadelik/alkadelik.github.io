@@ -1,7 +1,7 @@
 export const baseUrl = 'https://alkadelik.pythonanywhere.com/'
 
 // internal
-export const fetchRoads = `${baseUrl}roads/api/list/`
+export const fetchSegments = `${baseUrl}roads/api/list/`
 export const fetchRoutes = `${baseUrl}roads/api/list_routes/`
 export const fetchRoadStatus = `${baseUrl}roads/api/road_status/`
 export const bulkUpload = `${baseUrl}roads/api/bulk_segments/`

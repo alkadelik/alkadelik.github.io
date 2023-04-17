@@ -1,8 +1,8 @@
 <template>
   <div class="menu">
     <ul>
-        <router-link to="/">Segments</router-link>
-        <router-link to="/string_segments">Strings</router-link>
+        <router-link to="/segments">Segments</router-link>
+        <router-link :to="{name: 'analysis'}">Analysis</router-link>
     </ul>
   </div>
 </template>

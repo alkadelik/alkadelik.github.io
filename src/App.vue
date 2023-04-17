@@ -4,11 +4,11 @@
 
 <script>
 import {
-  fetchRoads,
+  fetchSegments,
 } from '@/services/apiServices'
 export default {
   created: function(){
-    fetchRoads() // put this in App.vue level
+    fetchSegments() // put this in App.vue level
   },
 }
 </script>

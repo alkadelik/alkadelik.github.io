@@ -3,7 +3,7 @@
     <div class="search">
         <div>
           <!-- <Segments></Segments> -->
-          <!-- <input v-model="search" placeholder="Enter route no">
+          <!-- <input v-model="search" placeholder="Enter segment code">
           <button type="submit">Search</button> -->
         </div>
       </div>
@@ -87,7 +87,6 @@ export default {
       store.commit(mutationTypes.CHANGE_MAP, data)
     },
     filterRoute(route) {
-      console.log(route)
       this.search = route
     }
   },
@@ -99,7 +98,7 @@ export default {
     filteredSegments() {
       return this.segments.filter((segment) => {
         if (this.search != '') {
-          return segment.route.toLowerCase().match(this.search.toLowerCase())
+          return segment.code.toLowerCase().match(this.search.toLowerCase())
         }
         return this.segments
       })
@@ -119,6 +118,9 @@ export default {
 </script>
 
 <style scoped>
+table {
+  width: 1150px;
+}
   th {
     padding: 5px 15px;
   }

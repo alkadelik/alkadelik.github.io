@@ -103,14 +103,14 @@ import Map from '@/components/Map.vue'
   }
   .container {
     width: 100%;
-    /* max-width: 1200px; */
     margin: 0 auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    /* background-color: aquamarine; */
   }
   .menu {
-    display: none;
+    /* display: none; */
     width: 100%;
     max-width: 150px;
     padding: 10px;
