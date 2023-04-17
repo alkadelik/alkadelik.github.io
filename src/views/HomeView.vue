@@ -110,7 +110,7 @@ import Map from '@/components/Map.vue'
     /* background-color: aquamarine; */
   }
   .menu {
-    display: none;
+    /* display: none; */
     width: 100%;
     max-width: 150px;
     padding: 10px;
