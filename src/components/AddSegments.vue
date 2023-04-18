@@ -23,7 +23,7 @@
 <script>
 import {
   fetchRoadStatus,
-  // bulkUpload,
+  bulkUpload,
   updateAddresses,
 } from '@/services/apiServices'
 import * as XLSX from 'xlsx'
@@ -62,8 +62,8 @@ export default {
         // nodes_sheet = JSON.stringify(data, undefined, 4) // converts to string. Not necessary
 
 
-        // bulkUpload(data) // enable for bulk upload. Also separate the extract part from the api part
-        updateAddresses(data)
+        bulkUpload(data) // enable for bulk upload. Also separate the extract part from the api part
+        // updateAddresses(data)
       }      
     },
     getRoadStatus() {
