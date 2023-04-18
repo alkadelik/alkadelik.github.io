@@ -53,11 +53,11 @@
             <td class="capitalise">{{ segment.name.toLowerCase() }}</td>
             <td class="capitalise">{{ segment.state.toLowerCase() }}</td>
             <td class="capitalise">{{ segment.start_point.toLowerCase() }}</td>
-            <td class="capitalise">{{ segment.start_point.toLowerCase() }}</td>
-            <td class="capitalise">{{ segment.start_point.toLowerCase() }}</td>
+            <td class="">{{ segment.northings }}</td>
+            <td class="">{{ segment.eastings }}</td>
             <td class="capitalise">{{ segment.end_point.toLowerCase() }}</td>
-            <td class="capitalise">{{ segment.end_point.toLowerCase() }}</td>
-            <td class="capitalise">{{ segment.end_point.toLowerCase() }}</td>
+            <td class="">{{ segment.northings2 }}</td>
+            <td class="capitalise">{{ segment.eastings2 }}</td>
             <td>{{ segment.distance }} Km</td>
             <td>{{ segment.travel_time }} mins</td>
             <td class="status" :style="{background: '#' + segment.status}" style="font-weight: bold;">{{ segment.avg_speed }} Km/hr</td>
