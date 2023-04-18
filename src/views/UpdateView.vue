@@ -1,9 +1,11 @@
 <template>
+  <Menu></Menu>
   <AddSegment></AddSegment>
 </template>
 
 <script>
 import AddSegment from '@/components/AddSegments.vue'
+import Menu from '@/components/Menu.vue'
 import {
   // fetchRoutes,
   // getStringDetails,
@@ -12,7 +14,8 @@ import {
  export default {
   name: 'StringsView',
   components: {
-    AddSegment
+    AddSegment,
+    Menu,
   },
   data: () => ({
     
