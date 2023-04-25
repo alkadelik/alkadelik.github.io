@@ -127,5 +127,8 @@ import {
   .main {
     width: 100%;
   }
+  .map {
+    display: none;
+  }
  
 </style>

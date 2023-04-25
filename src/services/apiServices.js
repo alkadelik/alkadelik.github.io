@@ -62,3 +62,33 @@ export const updateAddresses = (data) => {
         console.log(response.data)
     })
 }
+export const updateCode = (data) => {
+    return axios ({
+        method: 'post',
+        url: `${urls.updateCode}`,
+        data
+    })
+    .then((response) => {
+        console.log(response.data)
+    })
+}
+export const updateName = (data) => {
+    return axios ({
+        method: 'post',
+        url: `${urls.updateName}`,
+        data
+    })
+    .then((response) => {
+        console.log(response.data)
+    })
+}
+export const updateState = (data) => {
+    return axios ({
+        method: 'post',
+        url: `${urls.updateState}`,
+        data
+    })
+    .then((response) => {
+        console.log(response.data)
+    })
+}

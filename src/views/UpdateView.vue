@@ -1,6 +1,8 @@
 <template>
-  <Menu></Menu>
-  <AddSegment></AddSegment>
+  <div class="container">
+    <Menu></Menu>
+    <AddSegment></AddSegment>
+  </div>
 </template>
 
 <script>
@@ -29,5 +31,20 @@ import {
 </script>
 
 <style scoped>
- 
+.container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* background-color: aquamarine; */
+  }
+  .menu {
+    /* display: none; */
+    width: 100%;
+    max-width: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+  }
 </style>
