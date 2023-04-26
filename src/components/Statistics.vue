@@ -137,15 +137,26 @@ export default {
       this.all_segments = true
       this.search_segment = false
 
-      this.group_condition.good = 0
-      this.group_condition.tolerable = 0
-      this.group_condition.intolerable = 0
-      this.group_condition.failed = 0
-      
-      this.group_condition_percentage.good = 0
-      this.group_condition_percentage.tolerable = 0
-      this.group_condition_percentage.intolerable = 0
-      this.group_condition_percentage.failed = 0
+      this.roadCondition(this.segments)
+    },
+    roadCondition(segment_array) {
+      for (let i=0; i<segment_array.length; i++) {
+          let speed = Number(segment_array[i].avg_speed)
+          let distance = Number(segment_array[i].distance)
+          if (speed < 50) {
+            this.group_condition.failed += Math.round(distance)
+            this.group_condition_percentage.failed = Math.round(this.group_condition.failed / this.allSegmentsLength * 100)
+          } else if (speed < 60) {
+            this.group_condition.intolerable += Math.round(distance)
+            this.group_condition_percentage.intolerable = Math.round(this.group_condition.intolerable / this.allSegmentsLength * 100)
+          } else if (speed < 70) {
+            this.group_condition.tolerable += Math.round(distance)
+            this.group_condition_percentage.tolerable = Math.round(this.group_condition.tolerable / this.allSegmentsLength * 100)
+          } else {
+            this.group_condition.good += Math.round(distance)
+            this.group_condition_percentage.good = Math.round(this.group_condition.good / this.allSegmentsLength * 100)
+          }
+        }
     },
     groupSearchComputations() {
       this.group_length = this.groupSearch.reduce((total, road) => {
@@ -153,10 +164,6 @@ export default {
       }, 0.0)
 
       this.group_segment_count = this.groupSearch.length
-
-      // categories
-      // good (length and %)
-      // bad (length and %)
     },
     showManualSearchDetails() {
       // if there's a complete (not partial) segment match and only one
@@ -191,6 +198,11 @@ export default {
       states: 'getStates',
       routes: 'getRoutes',
     }),
+    allSegmentsLength() {
+      return this.segments.reduce((total, road) => {
+        return Number(total) + Math.round(road.distance)
+      }, 0.0)
+    },
     // these filters are also in HomeView. Should be refactored
     groupSearch() {
       return this.segments.filter((segment) => {
@@ -202,27 +214,25 @@ export default {
         }
       })
     },
+    noOfAllRoutes() {
+      return this.routes.length
+    },
+    noOfAllSegments() {
+      return this.segments.length
+    },
+    routeCount() {
+      return null
+    },
     segmentSearch() {
-      // search segment code, name, address, start point, end point
+      // search segment code, (name, address, start point, end point)
       return this.segments.filter((segment) => {
         if (this.search != '') {
           return this.search.toLowerCase().match(segment.code.toLowerCase())
         }
       })
     },
-    routeCount() {
-      return null
-    },
-    allSegmentsLength() {
-      return this.segments.reduce((total, road) => {
-        return Number(total) + Math.round(road.distance)
-      }, 0.0)
-    },
-    noOfAllRoutes() {
-      return this.routes.length
-    },
-    noOfAllSegments() {
-      return this.segments.length
+    allSegmentsRoadCondition() {
+      return this.roadCondition(this.segments)
     },
   },
   watch: {
@@ -249,6 +259,9 @@ export default {
       this.group_condition.failed = 0
 
       if (this.groupSearch != 0) {
+        // this.roadCondition(this.groupSearch)
+        // I tried to make the for loop below a method
+        // but it became semi unreactive. Hence using the long form below
         for (let i=0; i<this.groupSearch.length; i++) {
           let speed = Number(this.groupSearch[i].avg_speed)
           let distance = Number(this.groupSearch[i].distance)
