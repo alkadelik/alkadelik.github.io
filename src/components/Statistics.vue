@@ -137,6 +137,16 @@ export default {
       this.all_segments = true
       this.search_segment = false
 
+      this.group_condition.good = 0
+      this.group_condition.tolerable = 0
+      this.group_condition.intolerable = 0
+      this.group_condition.failed = 0
+
+      this.group_condition_percentage.good = 0
+      this.group_condition_percentage.tolerable = 0
+      this.group_condition_percentage.intolerable = 0
+      this.group_condition_percentage.failed = 0
+
       this.roadCondition(this.segments)
     },
     roadCondition(segment_array) {
