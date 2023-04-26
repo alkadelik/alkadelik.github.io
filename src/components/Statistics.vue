@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="left selection">
-      <button @click="clearAllFilters">Reset</button>
+      <button @click.prevent="clearAllFilters">Reset</button>
       <div>
         <input v-model="manual_input_search" @input="showManualSearchDetails" placeholder="Search segment">
 
@@ -22,7 +22,7 @@
     </div>
     
 
-    <div class="right stats" v-if="!search_segment">
+    <div class="right stats" v-if="!search_segment"><!-- multiple segments search -->
       <div v-if="all_segments">
         <div class="basic_info">
           <h4>All segments</h4>
@@ -30,28 +30,10 @@
             <li>Total lenght: {{ this.allSegmentsLength }}</li>
             <li>No of routes: {{ this.noOfAllRoutes }}</li>
             <li>No of segments: {{ this.noOfAllSegments }}</li>
-            <li>Good roads: <span>{{  }} ({{  }}%)</span></li>
-            <li>Bad roads: <span>{{  }} ({{  }}%)</span></li>
-          </ul>
-        </div>
-        <div class="A_roads">
-          <h4>F roads</h4>
-          <ul>
-            <li>Total lenght: {{ this.allSegmentsLength }}</li>
-            <li>No of routes: {{ this.noOfAllRoutes }}</li>
-            <li>No of segments: {{ this.noOfAllSegments }}</li>
-            <li>Good roads: <span>{{  }} ({{  }}%)</span></li>
-            <li>Bad roads: <span>{{  }} ({{  }}%)</span></li>
-          </ul>
-        </div>
-        <div class="F_roads">
-          <h4>A roads</h4>
-          <ul>
-            <li>Total lenght: {{ this.allSegmentsLength }}</li>
-            <li>No of routes: {{ this.noOfAllRoutes }}</li>
-            <li>No of segments: {{ this.noOfAllSegments }}</li>
-            <li>Good roads: <span>{{  }} ({{  }}%)</span></li>
-            <li>Bad roads: <span>{{  }} ({{  }}%)</span></li>
+              <li>Good: <span>{{ group_condition.good }} ({{ group_condition_percentage.good }}%)</span></li>
+              <li>Tolerable: <span>{{ group_condition.tolerable }} ({{ group_condition_percentage.tolerable }}%)</span></li>
+              <li>Intolerable: <span>{{ group_condition.intolerable }} ({{ group_condition_percentage.intolerable }}%)</span></li>
+              <li>Failed: <span>{{ group_condition.failed }} ({{ group_condition_percentage.failed }}%)</span></li>
           </ul>
         </div>
       </div> <!-- end all_segments -->
@@ -63,27 +45,31 @@
             <ul>
               <li>Total lenght: {{ this.group_length }}</li>
               <li>No of segments: {{ this.group_segment_count }}</li>
-              <li>Good roads: <span>{{  }} ({{  }}%)</span></li>
-              <li>Bad roads: <span>{{  }} ({{  }}%)</span></li>
+              <li>Good: <span>{{ group_condition.good }} ({{ group_condition_percentage.good }}%)</span></li>
+              <li>Tolerable: <span>{{ group_condition.tolerable }} ({{ group_condition_percentage.tolerable }}%)</span></li>
+              <li>Intolerable: <span>{{ group_condition.intolerable }} ({{ group_condition_percentage.intolerable }}%)</span></li>
+              <li>Failed: <span>{{ group_condition.failed }} ({{ group_condition_percentage.failed }}%)</span></li>
             </ul>
           </div>
         </div> <!-- end search_route -->
 
-        <div v-else>
+        <div v-else><!-- state search -->
           <div class="basic_info">
             <h4>{{ selected_state }} segments</h4>
             <ul>
               <li>Total lenght: {{ this.group_length }}</li>
               <li>No of segments: {{ this.group_segment_count }}</li>
-              <li>Good roads: <span>{{  }} ({{  }}%)</span></li>
-              <li>Bad roads: <span>{{  }} ({{  }}%)</span></li>
+              <li>Good: <span>{{ group_condition.good }} ({{ group_condition_percentage.good }}%)</span></li>
+              <li>Tolerable: <span>{{ group_condition.tolerable }} ({{ group_condition_percentage.tolerable }}%)</span></li>
+              <li>Intolerable: <span>{{ group_condition.intolerable }} ({{ group_condition_percentage.intolerable }}%)</span></li>
+              <li>Failed: <span>{{ group_condition.failed }} ({{ group_condition_percentage.failed }}%)</span></li>
             </ul>
           </div>
         </div> <!-- end state search -->
       </div>
     </div> <!-- end group search -->
 
-    <div class="right stats" v-else>
+    <div class="right stats" v-else><!-- single segment search -->
       <div class="basic_info">
         <ul v-for="segment, i in segmentSearch" :key="i">
           <li>Route: <span>{{ segment.route }}</span></li>
@@ -99,15 +85,10 @@
           <li>Length: <span>{{ segment.distance }}</span></li>
           <li>Time: <span>{{ segment.travel_time }}</span></li>
           <li>Speed: <span>{{ segment.avg_speed }}</span></li>
-        </ul>
-        <ul>
-          <li>Road state: <span>Good</span></li>
-          <li>Updated: <span>Monday, April 10</span></li>
-          <li>Start point: <span>Mokola</span></li>
-          <li>End point: <span>Ipin</span></li>
+          <li>Road condition: <span :style="{background: '#' + segment.status}">{{ segment_condition }}</span></li>
+          <!-- <li>Updated: <span>Monday, April 10</span></li> -->
         </ul>
         <div class="graph">
-          <p>This is the tail of a cat</p>
         </div>
       </div>
     </div> <!-- end segment search -->
@@ -123,6 +104,18 @@ export default {
   ],
   data: () => ({
     all_segments: true,
+    group_condition: {
+      good: 0,
+      tolerable: 0,
+      intolerable: 0,
+      failed: 0,
+    },
+    group_condition_percentage: {
+      good: 0,
+      tolerable: 0,
+      intolerable: 0,
+      failed: 0,
+    },
     group_search: '', // should this share the search data point rather than be separate?
     group_length: 0,
     group_route_count: 0,
@@ -131,7 +124,8 @@ export default {
     selected_state: '',
     search: '',
     search_segment: false,
-    search_route: false, 
+    search_route: false,
+    segment_condition: '',
     manual_input_search: '',
   }),
   methods: {
@@ -142,6 +136,16 @@ export default {
       this.selected_state = ''
       this.all_segments = true
       this.search_segment = false
+
+      this.group_condition.good = 0
+      this.group_condition.tolerable = 0
+      this.group_condition.intolerable = 0
+      this.group_condition.failed = 0
+      
+      this.group_condition_percentage.good = 0
+      this.group_condition_percentage.tolerable = 0
+      this.group_condition_percentage.intolerable = 0
+      this.group_condition_percentage.failed = 0
     },
     groupSearchComputations() {
       this.group_length = this.groupSearch.reduce((total, road) => {
@@ -165,12 +169,15 @@ export default {
       }
     },
     showGroupDetails(option) {
+      this.manual_input_search = ''
       this.search_segment = false
       this.all_segments = false
       if (option === 'route') {
+        this.selected_state = ''
         this.search_route = true
         this.group_search = this.selected_route.route
       } else {
+        this.selected_route = ''
         this.search_route = false
         this.group_search = this.selected_state
       }
@@ -193,11 +200,6 @@ export default {
           }
           return segment.state.toLowerCase().match(this.group_search.toLowerCase()) 
         }
-
-      // no of segments
-      // no of routes
-      // all segments lenght
-      // no of routes
       })
     },
     segmentSearch() {
@@ -208,22 +210,12 @@ export default {
         }
       })
     },
-    aRoutes() {
-      return this.routes.filter((route) => {
-        return route.category.toString().match('1')
-      })
-    },
-    fRoutes() {
-      return this.routes.filter((route) => {
-        return route.category.toString().match('2')
-      })
-    },  
     routeCount() {
       return null
     },
     allSegmentsLength() {
       return this.segments.reduce((total, road) => {
-        return Number(total) + Number(road.distance)
+        return Number(total) + Math.round(road.distance)
       }, 0.0)
     },
     noOfAllRoutes() {
@@ -232,6 +224,50 @@ export default {
     noOfAllSegments() {
       return this.segments.length
     },
+  },
+  watch: {
+    segmentSearch() {
+      try {
+        let speed = this.segmentSearch[0].avg_speed
+        if (speed < 50) {
+          this.segment_condition = 'Failed'
+        } else if (speed < 60) {
+          this.segment_condition = 'Intolerable'
+        } else if (speed < 70) {
+          this.segment_condition = 'Tolerable'
+        } else {
+          this.segment_condition = 'Good'
+        }
+      } catch {
+        null
+      }
+    },
+    groupSearch() {
+      this.group_condition.good = 0
+      this.group_condition.tolerable = 0
+      this.group_condition.intolerable = 0
+      this.group_condition.failed = 0
+
+      if (this.groupSearch != 0) {
+        for (let i=0; i<this.groupSearch.length; i++) {
+          let speed = Number(this.groupSearch[i].avg_speed)
+          let distance = Number(this.groupSearch[i].distance)
+          if (speed < 50) {
+            this.group_condition.failed += Math.round(distance)
+            this.group_condition_percentage.failed = Math.round(this.group_condition.failed / this.group_length * 100)
+          } else if (speed < 60) {
+            this.group_condition.intolerable += Math.round(distance)
+            this.group_condition_percentage.intolerable = Math.round(this.group_condition.intolerable / this.group_length * 100)
+          } else if (speed < 70) {
+            this.group_condition.tolerable += Math.round(distance)
+            this.group_condition_percentage.tolerable = Math.round(this.group_condition.tolerable / this.group_length * 100)
+          } else {
+            this.group_condition.good += Math.round(distance)
+            this.group_condition_percentage.good = Math.round(this.group_condition.good / this.group_length * 100)
+          }
+        }
+      }
+    }
   }
 }
 </script>
