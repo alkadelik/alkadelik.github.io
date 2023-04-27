@@ -9,6 +9,7 @@ import {
 export default {
   created: function(){
     fetchSegments() // put this in App.vue level
+    console.log(process.env.VUE_APP_API_BASE_URL)
   },
 }
 </script>
