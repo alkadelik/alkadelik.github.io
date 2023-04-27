@@ -59,11 +59,11 @@
     </div>
     <div class="update">
       <hr>
-      <!-- <button @click="updateAddress">Update Address</button> -->
+      <button @click="updateAddress">Change Address</button>
       <button @click="changeSegmentCode">Update Segment Code</button>
       <button @click="changeSegmentState">Update Segment State</button>
       <button @click="changeSegmentName">Update Segment Name</button>
-      <!-- <button @click="updateCoordinates">Update Coordinates</button> -->
+      <button @click="changeCoordinates">Update Coordinates</button>
       <!-- <button @click="updateStatus">Update Status</button> -->
     </div>
   </div>
@@ -75,6 +75,7 @@ import {
   bulkUpload,
   updateAddresses,
   updateCode,
+  updateCoordinates,
   updateState,
   updateName,
 } from '@/services/apiServices'
@@ -148,6 +149,13 @@ export default {
     uploadSegments() {
       this.extractFile()
       bulkUpload(this.sheet)
+      .then((res) => { // does this depend on a response or does it fire immediately?
+        console.log(res)
+        alert("Uploading")
+      })
+    },
+    changeCoordinates() {
+      updateCoordinates(this.sheet)
     },
     changeSegmentCode() {
       this.extractFile()

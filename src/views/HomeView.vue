@@ -9,7 +9,7 @@
       </div>
       <div>
         <!-- <UploadFile></UploadFile> -->
-        <Segments></Segments>
+        <Segments :segments="segments"></Segments>
       </div>
     </div>
     <div id="map" class="column" v-show="display_map">
@@ -44,6 +44,7 @@ import Map from '@/components/Map.vue'
   },
   computed: {
     ...mapGetters({
+      segments: 'getSegments',
       display_map: 'getMapDisplayStatus',
     })
   },

@@ -15,13 +15,12 @@
         <select v-model="selected_state" @change="showGroupDetails('state')">
           <option disabled selected value="">Select state</option>
           <option v-for="state, i in states" :key="i" :value="state">
-            {{  state }}
+            {{ state }}
           </option>
         </select>
       </div>
     </div>
     
-
     <div class="right stats" v-if="!search_segment"><!-- multiple segments search -->
       <div v-if="all_segments">
         <div class="basic_info">
@@ -97,6 +96,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import * as mutationTypes from '@/store/mutationTypes'
+import store from '@/store/index'
+
 export default {
   name: 'StatisticsComp',
   props: [
@@ -149,6 +151,7 @@ export default {
       this.all_segments = true
       this.search_segment = false
       this.clearGroupConditions()
+      // store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, this.segments)
     },
     clearGroupConditions() {
       this.group_condition.good = 0
@@ -259,6 +262,8 @@ export default {
   },
   watch: {
     segmentSearch() {
+      store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, this.segmentSearch)
+
       try {
         let speed = this.segmentSearch[0].avg_speed
         if (speed < 50) {
@@ -276,6 +281,7 @@ export default {
     },
     groupSearch() {
       this.clearGroupConditions()
+      store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, this.groupSearch)
 
       if (this.groupSearch != 0) {
         // I tried to make the for loop below a method (see roadCondition()) but it became semi unreactive. Hence using the long form below

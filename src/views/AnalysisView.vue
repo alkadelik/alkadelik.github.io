@@ -7,6 +7,9 @@
       <div class="top">
         <Statistics></Statistics>
       </div>
+      <div>
+        <Segments :segments="segments"></Segments>
+      </div>
       <div class="bottom map">
         <div style="height: 400px; width: 100%; background-color: paleturquoise;">
           <Map></Map>
@@ -17,10 +20,11 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 import Map from '@/components/Map.vue'
 import Menu from '@/components/Menu.vue'
+import Segments from '@/components/SegmentsTable.vue'
 import Statistics from '@/components/Statistics.vue'
 
 import {
@@ -33,6 +37,7 @@ import {
   components: {
     Map,
     Menu,
+    Segments,
     Statistics,
   },
   data: () => ({
@@ -100,6 +105,11 @@ import {
       )
     }
   },
+  computed: {
+    ...mapGetters({
+      segments: 'getStatSegments',
+    })
+  }
 }
 </script>
 

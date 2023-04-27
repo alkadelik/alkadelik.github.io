@@ -8,26 +8,10 @@
         </div>
       </div>
     <div class="table">
-      <h2>Segments</h2>
-      <div class="pagination">
-        <ul><li style="display: block;" @click="clearSearch">All</li></ul>
-        <ul class="routes">
-          <li
-            v-for="route, i in aRoutes" :key="i"
-            @click="filterRoute(route.route)"
-            >
-            {{ route.route }}
-          </li>
-        </ul>
-        <ul class="routes">
-          <li
-            v-for="route, i in fRoutes" :key="i"
-            @click="filterRoute(route.route)"
-            >
-            {{ route.route }}
-          </li>
-        </ul>
-      </div>
+      <h2>Segments
+        <!-- <span v-if="i">{{ filteredSegments[0].route }} Segments</span>
+        <span v-if="i">Segments in {{ filteredSegments[0].state }}</span> -->
+      </h2>
       <table>
         <thead>
           <tr>
@@ -79,9 +63,9 @@ export default {
   components: {
     // Segments,
   },
-  props: {
-    // msg: String
-  },
+  props: [
+    'segments',
+  ],
   data: () => ({
     search: '',
     cat1: 1,
@@ -100,7 +84,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      segments: 'getSegments',
       routes: 'getRoutes'
     }),
     filteredSegments() {

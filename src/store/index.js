@@ -51,6 +51,7 @@ export default createStore({
       "Yobe",
       "Zamfara"
     ],
+    stat_segments: [],
   },
 
   getters: {
@@ -60,12 +61,16 @@ export default createStore({
     getRoutes: (state) => state.routes,
     getSegments: (state) => state.segments,
     getStates: (state) => state.states,
+    getStatSegments: (state) => state.stat_segments,
   },
 
   mutations: {
     [mutationTypes.CHANGE_MAP](state, data) {
       state.segment_map = data
       state.display_map = true
+    },
+    [mutationTypes.CHANGE_STAT_SEGMENTS](state, data) {
+      state.stat_segments = data
     },
     [mutationTypes.HIDE_MAP](state, data) {
       state.display_map = data
