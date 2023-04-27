@@ -30,10 +30,10 @@
             <li>Total lenght: {{ this.allSegmentsLength }}</li>
             <li>No of routes: {{ this.noOfAllRoutes }}</li>
             <li>No of segments: {{ this.noOfAllSegments }}</li>
-              <li>Good: <span>{{ group_condition.good }} ({{ group_condition_percentage.good }}%)</span></li>
-              <li>Tolerable: <span>{{ group_condition.tolerable }} ({{ group_condition_percentage.tolerable }}%)</span></li>
-              <li>Intolerable: <span>{{ group_condition.intolerable }} ({{ group_condition_percentage.intolerable }}%)</span></li>
-              <li>Failed: <span>{{ group_condition.failed }} ({{ group_condition_percentage.failed }}%)</span></li>
+              <li>Good: <span>{{ all_conditions.good }} ({{ all_conditions_percentage.good }}%)</span></li>
+              <li>Tolerable: <span>{{ all_conditions.tolerable }} ({{ all_conditions_percentage.tolerable }}%)</span></li>
+              <li>Intolerable: <span>{{ all_conditions.intolerable }} ({{ all_conditions_percentage.intolerable }}%)</span></li>
+              <li>Failed: <span>{{ all_conditions.failed }} ({{ all_conditions_percentage.failed }}%)</span></li>
           </ul>
         </div>
       </div> <!-- end all_segments -->
@@ -104,6 +104,18 @@ export default {
   ],
   data: () => ({
     all_segments: true,
+    all_conditions: {
+      good: 0,
+      tolerable: 0,
+      intolerable: 0,
+      failed: 0,
+    },
+    all_conditions_percentage: {
+      good: 0,
+      tolerable: 0,
+      intolerable: 0,
+      failed: 0,
+    },
     group_condition: {
       good: 0,
       tolerable: 0,
@@ -136,7 +148,9 @@ export default {
       this.selected_state = ''
       this.all_segments = true
       this.search_segment = false
-
+      this.clearGroupConditions()
+    },
+    clearGroupConditions() {
       this.group_condition.good = 0
       this.group_condition.tolerable = 0
       this.group_condition.intolerable = 0
@@ -146,25 +160,23 @@ export default {
       this.group_condition_percentage.tolerable = 0
       this.group_condition_percentage.intolerable = 0
       this.group_condition_percentage.failed = 0
-
-      this.roadCondition(this.segments)
     },
-    roadCondition(segment_array) {
+    roadCondition(segment_array) { // using all_conditions here, separate from group_condition becuase "allSegments" properties are computed thus sharing methods (in order to be DRY) requires reactivity and achieving that gets complex.
       for (let i=0; i<segment_array.length; i++) {
           let speed = Number(segment_array[i].avg_speed)
           let distance = Number(segment_array[i].distance)
           if (speed < 50) {
-            this.group_condition.failed += Math.round(distance)
-            this.group_condition_percentage.failed = Math.round(this.group_condition.failed / this.allSegmentsLength * 100)
+            this.all_conditions.failed += Math.round(distance)
+            this.all_conditions_percentage.failed = Math.round(this.all_conditions.failed / this.allSegmentsLength * 1000)/10
           } else if (speed < 60) {
-            this.group_condition.intolerable += Math.round(distance)
-            this.group_condition_percentage.intolerable = Math.round(this.group_condition.intolerable / this.allSegmentsLength * 100)
+            this.all_conditions.intolerable += Math.round(distance)
+            this.all_conditions_percentage.intolerable = Math.round(this.all_conditions.intolerable / this.allSegmentsLength * 1000)/10
           } else if (speed < 70) {
-            this.group_condition.tolerable += Math.round(distance)
-            this.group_condition_percentage.tolerable = Math.round(this.group_condition.tolerable / this.allSegmentsLength * 100)
+            this.all_conditions.tolerable += Math.round(distance)
+            this.all_conditions_percentage.tolerable = Math.round(this.all_conditions.tolerable / this.allSegmentsLength * 1000)/10
           } else {
-            this.group_condition.good += Math.round(distance)
-            this.group_condition_percentage.good = Math.round(this.group_condition.good / this.allSegmentsLength * 100)
+            this.all_conditions.good += Math.round(distance)
+            this.all_conditions_percentage.good = Math.round(this.all_conditions.good / this.allSegmentsLength * 1000)/10
           }
         }
     },
@@ -263,30 +275,29 @@ export default {
       }
     },
     groupSearch() {
-      this.group_condition.good = 0
-      this.group_condition.tolerable = 0
-      this.group_condition.intolerable = 0
-      this.group_condition.failed = 0
+      this.clearGroupConditions
 
       if (this.groupSearch != 0) {
-        // this.roadCondition(this.groupSearch)
-        // I tried to make the for loop below a method
-        // but it became semi unreactive. Hence using the long form below
+        // I tried to make the for loop below a method (see roadCondition()) but it became semi unreactive. Hence using the long form below
         for (let i=0; i<this.groupSearch.length; i++) {
           let speed = Number(this.groupSearch[i].avg_speed)
           let distance = Number(this.groupSearch[i].distance)
+
           if (speed < 50) {
+            // Getting a weird result when I do this:
+            // this.group_condition.failed += Math.round(distance *10)/10
+            // The resutls get inexplicably long decimal points whereas the intent is to get one decimal point - like when calculating the percentages.
             this.group_condition.failed += Math.round(distance)
-            this.group_condition_percentage.failed = Math.round(this.group_condition.failed / this.group_length * 100)
+            this.group_condition_percentage.failed = Math.round(this.group_condition.failed / this.group_length * 1000)/10
           } else if (speed < 60) {
             this.group_condition.intolerable += Math.round(distance)
-            this.group_condition_percentage.intolerable = Math.round(this.group_condition.intolerable / this.group_length * 100)
+            this.group_condition_percentage.intolerable = Math.round(this.group_condition.intolerable / this.group_length * 1000)/10
           } else if (speed < 70) {
             this.group_condition.tolerable += Math.round(distance)
-            this.group_condition_percentage.tolerable = Math.round(this.group_condition.tolerable / this.group_length * 100)
+            this.group_condition_percentage.tolerable = Math.round(this.group_condition.tolerable / this.group_length * 1000)/10
           } else {
             this.group_condition.good += Math.round(distance)
-            this.group_condition_percentage.good = Math.round(this.group_condition.good / this.group_length * 100)
+            this.group_condition_percentage.good = Math.round(this.group_condition.good / this.group_length * 1000)/10
           }
         }
       }
