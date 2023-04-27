@@ -275,7 +275,7 @@ export default {
       }
     },
     groupSearch() {
-      this.clearGroupConditions
+      this.clearGroupConditions()
 
       if (this.groupSearch != 0) {
         // I tried to make the for loop below a method (see roadCondition()) but it became semi unreactive. Hence using the long form below
