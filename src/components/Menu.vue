@@ -1,9 +1,9 @@
 <template>
   <div class="menu">
     <ul>
+      <li><router-link :to="{name: 'analysis'}">Segments</router-link></li>
+      <li><router-link :to="{name: 'update'}">Updates</router-link></li>
         <!-- <router-link to="/segments">Segments</router-link> -->
-        <router-link :to="{name: 'analysis'}">Segments</router-link>
-        <router-link :to="{name: 'update'}">Updates</router-link>
     </ul>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
 <style scoped>
  .menu {
     width: 100%;
-    max-width: 150px;
+    /* max-width: 150px; */
     padding: 10px;
     box-sizing: border-box;
     background-color: #f2f2f2;
@@ -47,6 +47,7 @@ export default {
   }
   .menu li {
     margin-bottom: 5px;
+    display: inline-block;
   }
   .menu a {
     display: block;

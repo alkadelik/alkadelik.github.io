@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-    <div class="column menu">
-      <Menu></Menu>
-    </div>
     <div class="column main">
       <div class="column">
         <!-- <Statistics></Statistics> -->
@@ -23,7 +20,6 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import Menu from '@/components/Menu.vue'
 // import UploadFile from '@/components/AddSegments.vue'
 import Segments from '@/components/SegmentsTable.vue'
 // import Statistics from '@/components/Statistics.vue'
@@ -32,7 +28,6 @@ import Map from '@/components/Map.vue'
  export default {
   name: 'DirectionsView',
   components: {
-    Menu,
     // UploadFile,
     Segments,
     // Statistics,

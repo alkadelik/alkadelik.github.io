@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-    <div class="column menu">
-      <Menu></Menu>
-    </div>
     <div class="main">
       <div class="top">
         <Statistics></Statistics>
@@ -23,7 +20,6 @@
 import { mapGetters } from 'vuex'
 
 import Map from '@/components/Map.vue'
-import Menu from '@/components/Menu.vue'
 import Segments from '@/components/SegmentsTable.vue'
 import Statistics from '@/components/Statistics.vue'
 
@@ -36,7 +32,6 @@ import {
   name: 'StringsView',
   components: {
     Map,
-    Menu,
     Segments,
     Statistics,
   },

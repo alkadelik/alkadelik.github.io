@@ -110,7 +110,7 @@ export default {
 
 <style scoped>
 table {
-  width: 1150px;
+  width: 100%;
 }
   th {
     padding: 5px 15px;

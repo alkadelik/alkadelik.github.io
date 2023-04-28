@@ -1,12 +1,17 @@
 <template>
+  <Menu></Menu>
   <router-view/>
 </template>
 
 <script>
+import Menu from '@/components/Menu.vue'
 import {
   fetchSegments,
 } from '@/services/apiServices'
 export default {
+  components: {
+    Menu,
+  },
   created: function(){
     fetchSegments() // put this in App.vue level
   },
