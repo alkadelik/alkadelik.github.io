@@ -9,6 +9,7 @@ export const bulkUpload = `${baseUrl}roads/api/add_bulk_segments/`
 export const updateAddresses = `${baseUrl}roads/api/update_address/`
 export const updateCode = `${baseUrl}roads/api/update_code/`
 export const updateName = `${baseUrl}roads/api/update_name/`
+export const updateMotorability = `${baseUrl}roads/api/update_motorability/`
 export const updateState = `${baseUrl}roads/api/update_state/`
 export const updateStatus = `${baseUrl}roads/api/update_status/`
 

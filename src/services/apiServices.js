@@ -83,6 +83,16 @@ export const updateName = (data) => {
         console.log(response.data)
     })
 }
+export const updateMotorability = (data) => {
+    return axios ({
+        method: 'post',
+        url: `${urls.updateMotorability}`,
+        data
+    })
+    .then((response) => {
+        console.log(response.data)
+    })
+}
 export const updateState = (data) => {
     return axios ({
         method: 'post',

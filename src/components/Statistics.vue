@@ -53,6 +53,8 @@
               <li>Intolerable: <span>{{ group_condition.intolerable }}Km ({{ group_condition_percentage.intolerable }}%)</span></li>
               <li>Failed: <span>{{ group_condition.failed }}Km ({{ group_condition_percentage.failed }}%)</span></li>
             </ul>
+            <button v-if="search_route" @click="refreshMotorability">Update motorability for route</button><!-- put warning not to because cost -->
+            <button v-else @click="refreshMotorability">Update motorability for state</button><!-- put warning not to because cost -->
           </div>
         </div>
       </div>
@@ -77,6 +79,7 @@
           <li>Road condition: <span :style="{background: '#' + segment.status}">{{ segment_condition }}</span></li>
           <!-- <li>Updated: <span>Monday, April 10</span></li> -->
         </ul>
+        <button @click="refreshMotorability">Update segment motorability</button><!-- put warning not to because cost -->
         <div class="graph">
         </div>
       </div>
@@ -89,6 +92,7 @@ import { mapGetters } from 'vuex'
 import * as mutationTypes from '@/store/mutationTypes'
 import store from '@/store/index'
 import Autocomplete from '@/components/Autocomplete.vue'
+import {updateMotorability} from '@/services/apiServices'
 
 export default {
   name: 'StatisticsComp',
@@ -164,6 +168,15 @@ export default {
       }, 0.0)
 
       this.group_segment_count = this.groupSearch.length
+    },
+    refreshMotorability() {
+      if (this.search_segment) {
+        updateMotorability(this.segmentSearch[0].id)
+      } else if (this.search_route) {
+        updateMotorability({'route': this.selected_route.id})
+      } else {
+        updateMotorability({'state': this.selected_state})
+      }
     },
     roadCondition(segment_array) { // using all_conditions here, separate from group_condition becuase "allSegments" properties are computed thus sharing methods (in order to be DRY) requires reactivity and achieving that gets complex.
       for (let i=0; i<segment_array.length; i++) {
