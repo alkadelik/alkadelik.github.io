@@ -31,7 +31,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="details" v-for="segment, i in filteredSegments" :key="i" @click="displayDetails(segment.map, segment.segment)">
+          <tr class="details" v-for="segment, i in filteredSegments" :key="i" @click="displayDetails(segment.map, segment.code)">
             <td>{{ segment.route }}</td>
             <td>{{ segment.code }}</td>
             <td class="capitalise">{{ segment.name.toLowerCase() }}</td>

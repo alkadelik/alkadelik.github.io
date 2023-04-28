@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <p><span @click="hideMap">x</span></p>
-    <img :src="'http://127.0.0.1:8000' + map.map" alt="segment map">
+    <!-- <p><span @click="hideMap">x</span></p> -->
+    <img :src="'http://127.0.0.1:8000' + map.map" alt="">
     <h4>{{ map.segment }}</h4>
 
   </div>

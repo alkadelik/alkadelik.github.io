@@ -2,15 +2,15 @@
   <div class="container">
     <div class="main">
       <div class="top">
-        <Statistics></Statistics>
+        <div>
+          <Statistics></Statistics>
+        </div>
+        <div>
+          <Map></Map>
+        </div>
       </div>
       <div>
         <Segments :segments="segments"></Segments>
-      </div>
-      <div class="bottom map">
-        <div style="height: 400px; width: 100%; background-color: paleturquoise;">
-          <Map></Map>
-        </div>
       </div>
     </div>
   </div>
@@ -132,8 +132,8 @@ import {
   .main {
     width: 100%;
   }
-  .map {
-    display: none;
+  .top {
+    display: flex;
+    flex-direction: row;
   }
- 
 </style>

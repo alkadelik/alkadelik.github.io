@@ -35,9 +35,36 @@
     <p><ul>
       <li class="heading"><span>Rules for updating segments</span></li>
       <li>1. All files uploaded should use the following formats/extensions: .xls or .xlsx</li>
-      <li>2. The header row (top row of the excel sheet) should contain the following titles in UPPER_CASE font</li>
-      <li>- SEGMENT_CODE - this is the segment code e.g. E1S1, E1S2.</li>
-      <li>- THE_TITLE of the property to be updated. The order of the title columns don't matter.</li>
+      <li>2. Updating segments do not require all the columns to be present in the excel file. The only compulsory columns are the SEGMENT_CODE, which is used to identify the segment to be updated, and the actual columns to be updated, which contain the new values. Note that the SEGMENT_CODE is the current segment code</li>
+      <li>
+        <table>
+          <thead>
+            <tr>
+              <th>What to update</th>
+              <th>COLUMN_TITLE(S)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Segment code</td>
+              <td>NEW_CODE</td>
+            </tr>
+            <tr>
+              <td>Segment state</td>
+              <td>STATE</td>
+            </tr>
+            <tr>
+              <td>Segment name</td>
+              <td>SEGMENT_NAME</td>
+            </tr>
+            <tr>
+              <td>Segment coordinates*</td>
+              <td>NORTHINGS, EASTINGS, NORTHINGS2, EASTINGS2</td>
+            </tr>
+          </tbody>
+        </table>
+        *Still in development - might experience issues
+      </li>
       <li><br></li>
       <li>Notes</li>
       <li>- The titles should be in UPPER_CASE.</li>
