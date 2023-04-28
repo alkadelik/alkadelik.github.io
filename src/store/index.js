@@ -6,6 +6,7 @@ export default createStore({
   state: {
     addresses: [],
     segments: [],
+    directory: [],
     display_map: false,
     routes: [],
     segment_map: {
@@ -56,6 +57,7 @@ export default createStore({
 
   getters: {
     getAddresses: (state) => state.addresses,
+    getDirectory: (state) => state.directory,
     getMap: (state) => state.segment_map,
     getMapDisplayStatus: (state) => state.display_map,
     getRoutes: (state) => state.routes,
@@ -77,6 +79,9 @@ export default createStore({
     },
     [mutationTypes.SAVE_ADDRESSES](state, data) {
       state.addresses = data
+    },
+    [mutationTypes.SAVE_DIRECTORY](state, data) {
+      state.directory = data
     },
     [mutationTypes.SAVE_SEGMENTS](state, data) {
       state.segments = data

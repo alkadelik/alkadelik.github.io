@@ -1,10 +1,13 @@
 <template>
-  <div class="container">
+  <div class="container statistics">
     <div class="left selection">
       <button @click.prevent="clearAllFilters">Reset</button>
       <div>
-        <input v-model="manual_input_search" @input="showManualSearchDetails" placeholder="Search segment">
-
+        <Autocomplete 
+          :directory="directory" class="position"
+          :clear_search="clear_manual_search"
+          @set-segment="setSegment"
+        ></Autocomplete>
         <select v-model="selected_route" @change="showGroupDetails('route')">
           <option disabled selected value="">Select route</option>
           <option v-for="route, i in routes" :key="i" :value="route">
@@ -29,42 +32,29 @@
             <li>Total lenght: {{ this.allSegmentsLength }}</li>
             <li>No of routes: {{ this.noOfAllRoutes }}</li>
             <li>No of segments: {{ this.noOfAllSegments }}</li>
-              <li>Good: <span>{{ all_conditions.good }} ({{ all_conditions_percentage.good }}%)</span></li>
-              <li>Tolerable: <span>{{ all_conditions.tolerable }} ({{ all_conditions_percentage.tolerable }}%)</span></li>
-              <li>Intolerable: <span>{{ all_conditions.intolerable }} ({{ all_conditions_percentage.intolerable }}%)</span></li>
-              <li>Failed: <span>{{ all_conditions.failed }} ({{ all_conditions_percentage.failed }}%)</span></li>
+              <li>Good: <span>{{ all_conditions.good }}Km ({{ all_conditions_percentage.good }}%)</span></li>
+              <li>Tolerable: <span>{{ all_conditions.tolerable }}Km ({{ all_conditions_percentage.tolerable }}%)</span></li>
+              <li>Intolerable: <span>{{ all_conditions.intolerable }}Km ({{ all_conditions_percentage.intolerable }}%)</span></li>
+              <li>Failed: <span>{{ all_conditions.failed }}Km ({{ all_conditions_percentage.failed }}%)</span></li>
           </ul>
         </div>
       </div> <!-- end all_segments -->
 
-      <div v-else>
-        <div v-if="search_route">
+      <div v-else><!-- route or state search-->
+        <div>
           <div class="basic_info">
-            <h4>{{ selected_route.route }} segments</h4>
+            <h4 v-if="search_route">{{ selected_route.route }} segments</h4>
+            <h4 v-else>{{ selected_state }} segments</h4>
             <ul>
               <li>Total lenght: {{ this.group_length }}</li>
               <li>No of segments: {{ this.group_segment_count }}</li>
-              <li>Good: <span>{{ group_condition.good }} ({{ group_condition_percentage.good }}%)</span></li>
-              <li>Tolerable: <span>{{ group_condition.tolerable }} ({{ group_condition_percentage.tolerable }}%)</span></li>
-              <li>Intolerable: <span>{{ group_condition.intolerable }} ({{ group_condition_percentage.intolerable }}%)</span></li>
-              <li>Failed: <span>{{ group_condition.failed }} ({{ group_condition_percentage.failed }}%)</span></li>
+              <li>Good: <span>{{ group_condition.good }}Km ({{ group_condition_percentage.good }}%)</span></li>
+              <li>Tolerable: <span>{{ group_condition.tolerable }}Km ({{ group_condition_percentage.tolerable }}%)</span></li>
+              <li>Intolerable: <span>{{ group_condition.intolerable }}Km ({{ group_condition_percentage.intolerable }}%)</span></li>
+              <li>Failed: <span>{{ group_condition.failed }}Km ({{ group_condition_percentage.failed }}%)</span></li>
             </ul>
           </div>
-        </div> <!-- end search_route -->
-
-        <div v-else><!-- state search -->
-          <div class="basic_info">
-            <h4>{{ selected_state }} segments</h4>
-            <ul>
-              <li>Total lenght: {{ this.group_length }}</li>
-              <li>No of segments: {{ this.group_segment_count }}</li>
-              <li>Good: <span>{{ group_condition.good }} ({{ group_condition_percentage.good }}%)</span></li>
-              <li>Tolerable: <span>{{ group_condition.tolerable }} ({{ group_condition_percentage.tolerable }}%)</span></li>
-              <li>Intolerable: <span>{{ group_condition.intolerable }} ({{ group_condition_percentage.intolerable }}%)</span></li>
-              <li>Failed: <span>{{ group_condition.failed }} ({{ group_condition_percentage.failed }}%)</span></li>
-            </ul>
-          </div>
-        </div> <!-- end state search -->
+        </div>
       </div>
     </div> <!-- end group search -->
 
@@ -98,12 +88,16 @@
 import { mapGetters } from 'vuex'
 import * as mutationTypes from '@/store/mutationTypes'
 import store from '@/store/index'
+import Autocomplete from '@/components/Autocomplete.vue'
 
 export default {
   name: 'StatisticsComp',
   props: [
     // 'segment',
   ],
+  components: {
+    Autocomplete,
+  },
   data: () => ({
     all_segments: true,
     all_conditions: {
@@ -140,12 +134,12 @@ export default {
     search_segment: false,
     search_route: false,
     segment_condition: '',
-    manual_input_search: '',
+    clear_manual_search: 0,
   }),
   methods: {
     clearAllFilters() {
       this.search = ''
-      this.manual_input_search = ''
+      this.clear_manual_search += 1
       this.selected_route = ''
       this.selected_state = ''
       this.all_segments = true
@@ -163,6 +157,13 @@ export default {
       this.group_condition_percentage.tolerable = 0
       this.group_condition_percentage.intolerable = 0
       this.group_condition_percentage.failed = 0
+    },
+    groupSearchComputations() {
+      this.group_length = this.groupSearch.reduce((total, road) => {
+        return Number(total) + Number(road.distance)
+      }, 0.0)
+
+      this.group_segment_count = this.groupSearch.length
     },
     roadCondition(segment_array) { // using all_conditions here, separate from group_condition becuase "allSegments" properties are computed thus sharing methods (in order to be DRY) requires reactivity and achieving that gets complex.
       for (let i=0; i<segment_array.length; i++) {
@@ -183,25 +184,14 @@ export default {
           }
         }
     },
-    groupSearchComputations() {
-      this.group_length = this.groupSearch.reduce((total, road) => {
-        return Number(total) + Number(road.distance)
-      }, 0.0)
-
-      this.group_segment_count = this.groupSearch.length
-    },
-    showManualSearchDetails() {
-      // if there's a complete (not partial) segment match and only one
-      if (this.manual_input_search.length > 3) {
-        this.search = this.manual_input_search
-        // if there's a match. clear other searches
-        this.selected_route = ''
-        this.selected_state = ''
-        this.search_segment = true
-      }
+    setSegment(seg) {
+      this.search = seg
+      this.selected_route = ''
+      this.selected_state = ''
+      this.search_segment = true
     },
     showGroupDetails(option) {
-      this.manual_input_search = ''
+      this.clear_manual_search += 1
       this.search_segment = false
       this.all_segments = false
       if (option === 'route') {
@@ -219,6 +209,7 @@ export default {
   computed: {
     ...mapGetters({
       addresses: 'getAddresses',
+      directory: 'getDirectory',
       segments: 'getSegments',
       states: 'getStates',
       routes: 'getRoutes',
@@ -317,9 +308,15 @@ export default {
   display: flex;
   flex-direction: row;
 }
+.statistics {
+  font-size: 20px;
+}
 .basic_info_2 {
   display: flex;
   flex-direction: column;
+}
+.position {
+  z-index: 100;
 }
 .selection, .stats {
   display: flex;
