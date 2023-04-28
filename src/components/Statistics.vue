@@ -160,7 +160,7 @@ export default {
     },
     groupSearchComputations() {
       this.group_length = this.groupSearch.reduce((total, road) => {
-        return Number(total) + Number(road.distance)
+        return Math.round(Number(total) + Number(road.distance))
       }, 0.0)
 
       this.group_segment_count = this.groupSearch.length
