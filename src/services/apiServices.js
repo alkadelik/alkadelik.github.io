@@ -73,6 +73,13 @@ export const updateCode = (data) => {
         console.log(response.data)
     })
 }
+export const updateCoordinates = (data) => {
+    return axios ({
+        method: 'post',
+        url: `${urls.updateCoordinates}`,
+        data
+    })
+}
 export const updateName = (data) => {
     return axios ({
         method: 'post',

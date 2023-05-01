@@ -28,7 +28,7 @@ export default createStore({
       "Edo",
       "Ekiti",
       "Enugu",
-      "FCT - Abuja",
+      "FCT",
       "Gombe",
       "Imo",
       "Jigawa",

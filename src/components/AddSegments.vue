@@ -138,8 +138,10 @@ export default {
         let workbook = XLSX.read(binary_data, {type: 'binary'})
 
         const sheet = workbook.SheetNames[0] // we know it's position [0] by looking in the workbook file
+        console.log("const sheet ", sheet)
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
         this.sheet = data
+        console.log("sheet is ", this.sheet)
         // nodes_sheet = JSON.stringify(data, undefined, 4) // converts to string. Not necessary
 
 
