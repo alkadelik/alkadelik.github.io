@@ -1,4 +1,5 @@
-export const baseUrl = process.env.VUE_APP_API_BASE_URL
+// export const baseUrl = process.env.VUE_APP_API_BASE_URL
+export const baseUrl = 'https://alkadelik.pythonanywhere.com/'
 
 // internal
 export const fetchSegments = `${baseUrl}roads/api/list/`
