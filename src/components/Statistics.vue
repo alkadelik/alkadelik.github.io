@@ -240,9 +240,9 @@ export default {
       return this.segments.filter((segment) => {
         if (this.group_search != '') {
           if (this.search_route) {
-            return segment.code.toLowerCase().match(this.group_search.toLowerCase()) 
+            return (segment.code.toLowerCase().match(this.group_search.toLowerCase())).sort()
           }
-          return segment.state.toLowerCase().match(this.group_search.toLowerCase()) 
+          return (segment.state.toLowerCase().match(this.group_search.toLowerCase())).sort()
         }
       })
     },
