@@ -29,7 +29,7 @@
         <div class="basic_info">
           <h4>All segments</h4>
           <ul>
-            <li>Total lenght: {{ this.allSegmentsLength }}</li>
+            <li>Total lenght: {{ this.allSegmentsLength }}Km</li>
             <li>No of routes: {{ this.noOfAllRoutes }}</li>
             <li>No of segments: {{ this.noOfAllSegments }}</li>
               <li>Good: <span>{{ all_conditions.good }}Km ({{ all_conditions_percentage.good }}%)</span></li>

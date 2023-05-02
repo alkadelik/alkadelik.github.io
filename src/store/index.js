@@ -84,7 +84,7 @@ export default createStore({
       state.directory = data
     },
     [mutationTypes.SAVE_SEGMENTS](state, data) {
-      state.segments = data
+      state.segments = data.sort()
     },
     [mutationTypes.SAVE_ROUTES](state, data) {
       state.routes = data

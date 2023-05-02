@@ -89,7 +89,7 @@ export default {
     filteredSegments() {
       return this.segments.filter((segment) => {
         if (this.search != '') {
-          return segment.code.toLowerCase().match(this.search.toLowerCase())
+          return (segment.code.toLowerCase().match(this.search.toLowerCase()))
         }
         return this.segments
       })
