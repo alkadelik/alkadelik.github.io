@@ -27,7 +27,7 @@
     </ul></p>
     <div class="">
         <div></div>
-          <input type="file" id="file" accept=".xls, .xlsx" @change="getFile($event)" placeholder="Select segements file">
+          <input type="file" id="file" accept=".xls, .xlsx" @change="extractFile($event)" placeholder="Select segements file">
         </div>
       <div class="column table">
       <button @click="uploadSegments">Upload Segments</button>
@@ -79,7 +79,7 @@
           <input v-model="end_lat">
           <input v-model="end_lng"> -->
           <!-- <button @click="getRoadStatus">Get single status</button> -->
-          <input type="file" id="file" accept=".xls, .xlsx" @change="getFile($event)" placeholder="Select segements file">
+          <input type="file" id="file" accept=".xls, .xlsx" @change="extractFile($event)" placeholder="Select segements file">
         </div>
       <div class="column table">
       </div>
@@ -129,10 +129,11 @@ export default {
     getFile(event) {
       this.file = event.target.files[0]
     },
-    extractFile() {
+    extractFile(event) {
       // ensure there's a file before submitting
+      let file = event.target.files[0]
       const file_reader = new FileReader()
-      file_reader.readAsBinaryString(this.file)
+      file_reader.readAsBinaryString(file)
       file_reader.onload = (event) => {
         let binary_data = event.target.result 
         let workbook = XLSX.read(binary_data, {type: 'binary'})
@@ -176,26 +177,22 @@ export default {
       updateAddresses()
     },
     uploadSegments() {
-      this.extractFile()
+      alert("Uploading")
       bulkUpload(this.sheet)
       .then((res) => { // does this depend on a response or does it fire immediately?
         console.log(res)
-        alert("Uploading")
       })
     },
     changeCoordinates() {
       updateCoordinates(this.sheet)
     },
     changeSegmentCode() {
-      this.extractFile()
       updateCode(this.sheet)
     },
     changeSegmentState() {
-      this.extractFile()
       updateState(this.sheet)
     },
     changeSegmentName() {
-      this.extractFile()
       updateName(this.sheet)
     },
   },
