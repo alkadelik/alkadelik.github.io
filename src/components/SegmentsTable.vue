@@ -94,16 +94,6 @@ export default {
         return this.segments
       })
     },
-    aRoutes() {
-      return this.routes.filter((route) => {
-        return route.category.toString().match('1')
-      })
-    },
-    fRoutes() {
-      return this.routes.filter((route) => {
-        return route.category.toString().match('2')
-      })
-    },
   }
 }
 </script>

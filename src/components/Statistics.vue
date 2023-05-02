@@ -178,24 +178,27 @@ export default {
         updateMotorability({'state': this.selected_state})
       }
     },
-    roadCondition(segment_array) { // using all_conditions here, separate from group_condition becuase "allSegments" properties are computed thus sharing methods (in order to be DRY) requires reactivity and achieving that gets complex.
-      for (let i=0; i<segment_array.length; i++) {
-          let speed = Number(segment_array[i].avg_speed)
-          let distance = Number(segment_array[i].distance)
-          if (speed < 50) {
-            this.all_conditions.failed += Math.round(distance)
-            this.all_conditions_percentage.failed = Math.round(this.all_conditions.failed / this.allSegmentsLength * 1000)/10
-          } else if (speed < 60) {
-            this.all_conditions.intolerable += Math.round(distance)
-            this.all_conditions_percentage.intolerable = Math.round(this.all_conditions.intolerable / this.allSegmentsLength * 1000)/10
-          } else if (speed < 70) {
-            this.all_conditions.tolerable += Math.round(distance)
-            this.all_conditions_percentage.tolerable = Math.round(this.all_conditions.tolerable / this.allSegmentsLength * 1000)/10
-          } else {
-            this.all_conditions.good += Math.round(distance)
-            this.all_conditions_percentage.good = Math.round(this.all_conditions.good / this.allSegmentsLength * 1000)/10
-          }
-        }
+    roadCondition(segment_array) { // using all_conditions here, separate from group_condition becuase "allSegments" properties are computed thus sharing methods (in order to be DRY) requires reactivity but achieving that gets complex.
+      // for (let i=0; i<segment_array.length; i++) {
+      //     let speed = Number(segment_array[i].avg_speed)
+      //     let distance = Number(segment_array[i].distance)
+      //     if (speed < 50) {
+      //       this.all_conditions.failed += Math.round(distance)
+      //       this.all_conditions_percentage.failed = Math.round(this.all_conditions.failed / this.allSegmentsLength * 1000)/10
+      //     } else if (speed < 60) {
+      //       this.all_conditions.intolerable += Math.round(distance)
+      //       this.all_conditions_percentage.intolerable = Math.round(this.all_conditions.intolerable / this.allSegmentsLength * 1000)/10
+      //     } else if (speed < 70) {
+      //       this.all_conditions.tolerable += Math.round(distance)
+      //       this.all_conditions_percentage.tolerable = Math.round(this.all_conditions.tolerable / this.allSegmentsLength * 1000)/10
+      //     } else {
+      //       this.all_conditions.good += Math.round(distance)
+      //       this.all_conditions_percentage.good = Math.round(this.all_conditions.good / this.allSegmentsLength * 1000)/10
+      //     }
+      //   }
+      if (segment_array) {
+        null
+      }
     },
     setSegment(seg) {
       this.search = seg
@@ -260,11 +263,27 @@ export default {
         }
       })
     },
-    allSegmentsRoadCondition() {
-      return this.roadCondition(this.segments)
-    },
   },
   watch: {
+    allSegmentsLength() {
+      for (let i=0; i<this.segments.length; i++) {
+        let speed = Number(this.segments[i].avg_speed)
+        let distance = Number(this.segments[i].distance)
+        if (speed < 50) {
+          this.all_conditions.failed += Math.round(distance)
+          this.all_conditions_percentage.failed = Math.round(this.all_conditions.failed / this.allSegmentsLength * 1000)/10
+        } else if (speed < 60) {
+          this.all_conditions.intolerable += Math.round(distance)
+          this.all_conditions_percentage.intolerable = Math.round(this.all_conditions.intolerable / this.allSegmentsLength * 1000)/10
+        } else if (speed < 70) {
+          this.all_conditions.tolerable += Math.round(distance)
+          this.all_conditions_percentage.tolerable = Math.round(this.all_conditions.tolerable / this.allSegmentsLength * 1000)/10
+        } else {
+          this.all_conditions.good += Math.round(distance)
+          this.all_conditions_percentage.good = Math.round(this.all_conditions.good / this.allSegmentsLength * 1000)/10
+        }
+      }
+    },
     segmentSearch() {
       store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, this.segmentSearch)
 
