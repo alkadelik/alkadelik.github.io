@@ -12,7 +12,7 @@ import {
 } from '@/services/apiServices'
 
  export default {
-  name: 'StringsView',
+  name: 'UpdateView',
   components: {
     AddSegment,
   },

@@ -26,7 +26,7 @@ import Segments from '@/components/SegmentsTable.vue'
 import Map from '@/components/Map.vue'
 
  export default {
-  name: 'DirectionsView',
+  name: 'HomeView',
   components: {
     // UploadFile,
     Segments,
@@ -44,7 +44,7 @@ import Map from '@/components/Map.vue'
     })
   },
   mounted() {
-    // Make the DIV element draggable:
+    // Make the div element draggable:
     dragElement(document.getElementById("map"))
 
     function dragElement(elmnt) {

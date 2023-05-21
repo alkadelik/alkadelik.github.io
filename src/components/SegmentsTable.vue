@@ -1,16 +1,9 @@
 <template>
   <div class="tables">
     <div class="search">
-        <div>
-          <!-- <Segments></Segments> -->
-          <!-- <input v-model="search" placeholder="Enter segment code">
-          <button type="submit">Search</button> -->
-        </div>
       </div>
     <div class="table">
       <h2>Segments
-        <!-- <span v-if="i">{{ filteredSegments[0].route }} Segments</span>
-        <span v-if="i">Segments in {{ filteredSegments[0].state }}</span> -->
       </h2>
       <table>
         <thead>
@@ -31,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="details" v-for="segment, i in filteredSegments" :key="i" @click="displayDetails(segment.map, segment.code)">
+          <tr class="details" v-for="segment, i in segments" :key="i" @click="displayDetails(segment.map, segment.code)">
             <td>{{ segment.route }}</td>
             <td>{{ segment.code }}</td>
             <td class="capitalise">{{ segment.name.toLowerCase() }}</td>
@@ -68,7 +61,7 @@ export default {
   ],
   data: () => ({
     search: '',
-    cat1: 1,
+    unordered_segments: [],
   }),
   methods: {
     clearSearch() {
@@ -86,15 +79,7 @@ export default {
     ...mapGetters({
       routes: 'getRoutes'
     }),
-    filteredSegments() {
-      return this.segments.filter((segment) => {
-        if (this.search != '') {
-          return (segment.code.toLowerCase().match(this.search.toLowerCase()))
-        }
-        return this.segments
-      })
-    },
-  }
+  },
 }
 </script>
 

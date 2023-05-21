@@ -29,7 +29,7 @@ import {
 } from '@/services/apiServices'
 
  export default {
-  name: 'StringsView',
+  name: 'AnalysisView',
   components: {
     Map,
     Segments,

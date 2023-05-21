@@ -235,12 +235,11 @@ export default {
         return Number(total) + Math.round(road.distance)
       }, 0.0)
     },
-    // these filters are also in HomeView. Should be refactored
-    groupSearch() {
+    groupSearch() {    
       return this.segments.filter((segment) => {
         if (this.group_search != '') {
           if (this.search_route) {
-            return (segment.code.toLowerCase().match(this.group_search.toLowerCase()))
+            return segment.code.toLowerCase().match(this.group_search.toLowerCase())
           }
           return segment.state.toLowerCase().match(this.group_search.toLowerCase())
         }
@@ -304,7 +303,16 @@ export default {
     },
     groupSearch() {
       this.clearGroupConditions()
-      store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, this.groupSearch)
+      
+      // if('route') {null}
+      // console.log(this.selected_route.route)
+      // console.log(this.selected_route.route.length)
+      // let double_filter = this.groupSearch.search(segment => {segment.route.length == this.selected_route.route.length})
+      // console.log(double_filter)
+
+
+      let ordered_search = this.groupSearch.sort((a, b) => a.index - b.index)
+      store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, ordered_search)
 
       if (this.groupSearch != 0) {
         // I tried to make the for loop below a method (see roadCondition()) but it became semi unreactive. Hence using the long form below

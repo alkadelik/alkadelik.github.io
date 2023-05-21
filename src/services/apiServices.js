@@ -1,7 +1,5 @@
 import axios from 'axios'
 import * as urls from './urls'
-import * as mutationTypes from '@/store/mutationTypes'
-import store from '@/store/index'
 
 // try {var auth = store.getters.getSettlement.keys.paystack_secret_key}
 // catch {null}
@@ -21,20 +19,11 @@ export const getStringDetails = (data) => {
         url: `${urls.getStringDetails}`,
         data
     })
-    // .then((response) => {
-    //     store.commit(mutationTypes.SAVE_SEGMENTS, response.data)
-    // })
 }
 export const fetchSegments = () => {
     return axios ({
         method: 'get',
         url: `${urls.fetchSegments}`,
-    })
-    .then((response) => {
-        store.commit(mutationTypes.SAVE_SEGMENTS, response.data.segments)
-        store.commit(mutationTypes.SAVE_ADDRESSES, response.data.addresses)
-        store.commit(mutationTypes.SAVE_ROUTES, response.data.routes)
-        store.commit(mutationTypes.SAVE_DIRECTORY, response.data.directory)
     })
 }
 export const fetchRoadStatus = (data) => {
@@ -48,9 +37,6 @@ export const fetchRoutes = () => {
     return axios ({
         method: 'get',
         url: `${urls.fetchRoutes}`,
-    })
-    .then((response) => {
-        store.commit(mutationTypes.SAVE_ROUTES, response.data)
     })
 }
 export const updateAddresses = (data) => {

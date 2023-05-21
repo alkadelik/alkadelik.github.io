@@ -4,6 +4,7 @@
 </template>
 
 <script>
+import * as mutationTypes from '@/store/mutationTypes'
 import Menu from '@/components/Menu.vue'
 import {
   fetchSegments,
@@ -13,7 +14,13 @@ export default {
     Menu,
   },
   created: function(){
-    fetchSegments() // put this in App.vue level
+    fetchSegments()
+    .then((response) => {
+      this.$store.commit(mutationTypes.SAVE_ADDRESSES, response.data.addresses)
+      this.$store.commit(mutationTypes.SAVE_ROUTES, response.data.routes)
+      this.$store.commit(mutationTypes.SAVE_DIRECTORY, response.data.directory)
+      this.$store.commit(mutationTypes.SAVE_SEGMENTS, response.data.segments)
+    })
   },
 }
 </script>
