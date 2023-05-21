@@ -309,7 +309,7 @@ export default {
       // console.log(this.selected_route.route.length)
       // let double_filter = this.groupSearch.search(segment => {segment.route.length == this.selected_route.route.length})
       // console.log(double_filter)
-
+      // does this affect anything
 
       let ordered_search = this.groupSearch.sort((a, b) => a.index - b.index)
       store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, ordered_search)
