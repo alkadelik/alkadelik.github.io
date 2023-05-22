@@ -79,7 +79,7 @@
           <li>Road condition: <span :style="{background: '#' + segment.status}">{{ segment_condition }}</span></li>
           <!-- <li>Updated: <span>Monday, April 10</span></li> -->
         </ul>
-        <button @click="refreshMotorability">Update segment motorability</button><!-- put warning not to because cost -->
+        <button @click="refreshMotorability">Update segment motorability</button><!-- doing this too often can ramp up google cost -->
         <div class="graph">
         </div>
       </div>
@@ -96,9 +96,6 @@ import {updateMotorability} from '@/services/apiServices'
 
 export default {
   name: 'StatisticsComp',
-  props: [
-    // 'segment',
-  ],
   components: {
     Autocomplete,
   },
@@ -116,7 +113,7 @@ export default {
       intolerable: 0,
       failed: 0,
     },
-    first_filter: [], // using groupSearch to caldulate no of segments in route, total distance, etc, is incorrect when searching routes but is correct for states. Thus it the parameters have to be calculated with double_filter.
+    first_filter: [],
     group_condition: {
       good: 0,
       tolerable: 0,
@@ -129,7 +126,7 @@ export default {
       intolerable: 0,
       failed: 0,
     },
-    group_search: '', // should this share the search data point rather than be separate?
+    group_search: '',
     group_length: 0,
     group_route_count: 0,
     group_segment_count: 0,
@@ -150,7 +147,6 @@ export default {
       this.all_segments = true
       this.search_segment = false
       this.clearGroupConditions()
-      // store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, this.segments)
     },
     clearGroupConditions() {
       this.group_condition.good = 0
@@ -165,7 +161,7 @@ export default {
     },
     groupSearchComputations() {
       if(this.search_route) {
-        var first_filter = this.segments.filter(segment => segment.code.toLowerCase().match(this.group_search.toLowerCase()))
+        var first_filter = this.segments.filter(segment => segment.route.toLowerCase().match(this.group_search.toLowerCase()))
       } else {
         first_filter = this.segments.filter(segment => segment.state.toLowerCase().match(this.group_search.toLowerCase()))
       }
@@ -227,15 +223,6 @@ export default {
       } else {
         return this.first_filter
       }
-
-      // return this.segments.filter((segment) => {
-      //   if (this.group_search != '') {
-      //     if (this.search_route) {
-      //       return segment.code.toLowerCase().match(this.group_search.toLowerCase())
-      //     }
-      //     return segment.state.toLowerCase().match(this.group_search.toLowerCase())
-      //   }
-      // })
     },
     noOfAllRoutes() {
       return this.routes.length
@@ -296,8 +283,12 @@ export default {
     groupSearch() {
       this.clearGroupConditions()
       
+      if(this.search_route) {
+        var ordered_search = this.groupSearch.sort((a, b) => a.index - b.index)
+      } else {
+        ordered_search = this.groupSearch.sort((a, b) => a.route < b.route || a.index - b.index)
+      }
 
-      let ordered_search = this.groupSearch.sort((a, b) => a.index - b.index)
       store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, ordered_search)
 
       if (this.groupSearch) {
@@ -353,7 +344,6 @@ export default {
 .selection {
   flex-direction: column;
   width: 200px;
-  /* padding: 15px; */
   background-color: bisque;
 }
 .stats, .map, .main, .selection {
