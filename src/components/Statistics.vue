@@ -116,6 +116,7 @@ export default {
       intolerable: 0,
       failed: 0,
     },
+    first_filter: [], // using groupSearch to caldulate no of segments in route, total distance, etc, is incorrect when searching routes but is correct for states. Thus it the parameters have to be calculated with double_filter.
     group_condition: {
       good: 0,
       tolerable: 0,
@@ -163,6 +164,13 @@ export default {
       this.group_condition_percentage.failed = 0
     },
     groupSearchComputations() {
+      if(this.search_route) {
+        var first_filter = this.segments.filter(segment => segment.code.toLowerCase().match(this.group_search.toLowerCase()))
+      } else {
+        first_filter = this.segments.filter(segment => segment.state.toLowerCase().match(this.group_search.toLowerCase()))
+      }
+      this.first_filter = first_filter
+
       this.group_length = this.groupSearch.reduce((total, road) => {
         return Math.round(Number(total) + Number(road.distance))
       }, 0.0)
@@ -176,28 +184,6 @@ export default {
         updateMotorability({'route': this.selected_route.id})
       } else {
         updateMotorability({'state': this.selected_state})
-      }
-    },
-    roadCondition(segment_array) { // using all_conditions here, separate from group_condition becuase "allSegments" properties are computed thus sharing methods (in order to be DRY) requires reactivity but achieving that gets complex.
-      // for (let i=0; i<segment_array.length; i++) {
-      //     let speed = Number(segment_array[i].avg_speed)
-      //     let distance = Number(segment_array[i].distance)
-      //     if (speed < 50) {
-      //       this.all_conditions.failed += Math.round(distance)
-      //       this.all_conditions_percentage.failed = Math.round(this.all_conditions.failed / this.allSegmentsLength * 1000)/10
-      //     } else if (speed < 60) {
-      //       this.all_conditions.intolerable += Math.round(distance)
-      //       this.all_conditions_percentage.intolerable = Math.round(this.all_conditions.intolerable / this.allSegmentsLength * 1000)/10
-      //     } else if (speed < 70) {
-      //       this.all_conditions.tolerable += Math.round(distance)
-      //       this.all_conditions_percentage.tolerable = Math.round(this.all_conditions.tolerable / this.allSegmentsLength * 1000)/10
-      //     } else {
-      //       this.all_conditions.good += Math.round(distance)
-      //       this.all_conditions_percentage.good = Math.round(this.all_conditions.good / this.allSegmentsLength * 1000)/10
-      //     }
-      //   }
-      if (segment_array) {
-        null
       }
     },
     setSegment(seg) {
@@ -235,15 +221,21 @@ export default {
         return Number(total) + Math.round(road.distance)
       }, 0.0)
     },
-    groupSearch() {    
-      return this.segments.filter((segment) => {
-        if (this.group_search != '') {
-          if (this.search_route) {
-            return segment.code.toLowerCase().match(this.group_search.toLowerCase())
-          }
-          return segment.state.toLowerCase().match(this.group_search.toLowerCase())
-        }
-      })
+    groupSearch() {   
+      if(this.search_route) {
+        return this.first_filter.filter(segment => segment.route.length == this.group_search.length)
+      } else {
+        return this.first_filter
+      }
+
+      // return this.segments.filter((segment) => {
+      //   if (this.group_search != '') {
+      //     if (this.search_route) {
+      //       return segment.code.toLowerCase().match(this.group_search.toLowerCase())
+      //     }
+      //     return segment.state.toLowerCase().match(this.group_search.toLowerCase())
+      //   }
+      // })
     },
     noOfAllRoutes() {
       return this.routes.length
@@ -304,16 +296,11 @@ export default {
     groupSearch() {
       this.clearGroupConditions()
       
-      if(this.search_route) {
-        var double_filter = this.groupSearch.filter(segment => segment.route.length == this.group_search.length)
-      } else {
-        double_filter = this.groupSearch
-      }
 
-      let ordered_search = double_filter.sort((a, b) => a.index - b.index)
+      let ordered_search = this.groupSearch.sort((a, b) => a.index - b.index)
       store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, ordered_search)
 
-      if (this.groupSearch != 0) {
+      if (this.groupSearch) {
         // I tried to make the for loop below a method (see roadCondition()) but it became semi unreactive. Hence using the long form below
         for (let i=0; i<this.groupSearch.length; i++) {
           let speed = Number(this.groupSearch[i].avg_speed)
