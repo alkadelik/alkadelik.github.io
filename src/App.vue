@@ -17,7 +17,10 @@ export default {
     fetchSegments()
     .then((response) => {
       this.$store.commit(mutationTypes.SAVE_ADDRESSES, response.data.addresses)
-      this.$store.commit(mutationTypes.SAVE_ROUTES, response.data.routes)
+      
+      let routes = response.data.routes
+      routes.sort((a, b) => a.index - b.index)
+      this.$store.commit(mutationTypes.SAVE_ROUTES, routes)
       this.$store.commit(mutationTypes.SAVE_DIRECTORY, response.data.directory)
       this.$store.commit(mutationTypes.SAVE_SEGMENTS, response.data.segments)
     })
