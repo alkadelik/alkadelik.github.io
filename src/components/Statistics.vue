@@ -304,14 +304,13 @@ export default {
     groupSearch() {
       this.clearGroupConditions()
       
-      // if('route') {null}
-      // console.log(this.selected_route.route)
-      // console.log(this.selected_route.route.length)
-      // let double_filter = this.groupSearch.search(segment => {segment.route.length == this.selected_route.route.length})
-      // console.log(double_filter)
-      // does this affect anything
+      if(this.search_route) {
+        var double_filter = this.groupSearch.filter(segment => segment.route.length == this.group_search.length)
+      } else {
+        double_filter = this.groupSearch
+      }
 
-      let ordered_search = this.groupSearch.sort((a, b) => a.index - b.index)
+      let ordered_search = double_filter.sort((a, b) => a.index - b.index)
       store.commit(mutationTypes.CHANGE_STAT_SEGMENTS, ordered_search)
 
       if (this.groupSearch != 0) {
