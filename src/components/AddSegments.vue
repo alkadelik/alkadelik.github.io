@@ -41,7 +41,7 @@
           <thead>
             <tr>
               <th>What to update</th>
-              <th>COLUMN_TITLE(S)</th>
+              <th>required COLUMN_TITLE(S)</th>
             </tr>
           </thead>
           <tbody>
